@@ -1,0 +1,36 @@
+import tailwindcss from '@tailwindcss/vite'
+import { tanstackRouter } from '@tanstack/router-plugin/vite'
+import react from '@vitejs/plugin-react'
+import path from 'node:path'
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+	plugins: [
+		tanstackRouter({
+			target: 'react',
+			autoCodeSplitting: true,
+			routesDirectory: './src/pages',
+			semicolons: false,
+			quoteStyle: 'single'
+		}),
+		react(),
+		tailwindcss()
+	],
+	resolve: {
+		alias: {
+			'@': path.resolve(__dirname, './src'),
+			'@components': path.resolve(__dirname, './src/components'),
+			'@modules': path.resolve(__dirname, './src/modules'),
+			'@utils': path.resolve(__dirname, './src/utils'),
+			'@styles': path.resolve(__dirname, './src/styles'),
+			'@types': path.resolve(__dirname, './src/types'),
+			'@hooks': path.resolve(__dirname, './src/hooks'),
+			'@contexts': path.resolve(__dirname, './src/contexts'),
+			'@ui': path.resolve(__dirname, './src/components/ui')
+		}
+	},
+	server: {
+		port: 3000,
+		host: true
+	}
+})
