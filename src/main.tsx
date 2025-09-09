@@ -3,6 +3,8 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 
+import { AppDepsProvider } from '@/-modules/shared/infra/di/deps'
+import { QueryProvider } from '@/-modules/shared/infra/query/QueryProvider'
 import { routeTree } from './routeTree.gen'
 
 // Create a new router instance
@@ -18,6 +20,10 @@ declare module '@tanstack/react-router' {
 // biome-ignore lint/style/noNonNullAssertion: <explanation>
 createRoot(document.getElementById('root')!).render(
 	<StrictMode>
-		<RouterProvider router={router} />
+		<QueryProvider>
+			<AppDepsProvider>
+				<RouterProvider router={router} />
+			</AppDepsProvider>
+		</QueryProvider>
 	</StrictMode>
 )
