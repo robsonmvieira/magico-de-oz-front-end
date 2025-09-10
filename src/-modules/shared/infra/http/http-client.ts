@@ -1,3 +1,5 @@
+import type { Response } from "../../domain/classes"
+
 export type RequestOptions = {
 	searchParams?: Record<string, unknown>
 	headers?: Record<string, string>
@@ -5,11 +7,11 @@ export type RequestOptions = {
 }
 
 export interface HttpClient {
-	get<T>(url: string, options?: RequestOptions): Promise<T>
-	post<T>(url: string, options?: RequestOptions): Promise<T>
-	put<T>(url: string, options?: RequestOptions): Promise<T>
-	patch<T>(url: string, options?: RequestOptions): Promise<T>
-	delete<T>(url: string, options?: RequestOptions): Promise<T>
+	get<T>(url: string, options?: RequestOptions): Promise<Response<T>>
+	post<T>(url: string, options?: RequestOptions): Promise<Response<T>>
+	put<T>(url: string, options?: RequestOptions): Promise<Response<T>>
+	patch<T>(url: string, options?: RequestOptions): Promise<Response<T>>
+	delete<T>(url: string, options?: RequestOptions): Promise<Response<T>>
 }
 
 

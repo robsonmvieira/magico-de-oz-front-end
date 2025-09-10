@@ -3,6 +3,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 
+import { AuthProvider } from '@/-modules/auth/infra/AuthProvider'
 import { AppDepsProvider } from '@/-modules/shared/infra/di/deps'
 import { QueryProvider } from '@/-modules/shared/infra/query/QueryProvider'
 import { routeTree } from './routeTree.gen'
@@ -22,7 +23,9 @@ createRoot(document.getElementById('root')!).render(
 	<StrictMode>
 		<QueryProvider>
 			<AppDepsProvider>
-				<RouterProvider router={router} />
+				<AuthProvider>
+					<RouterProvider router={router} />
+				</AuthProvider>
 			</AppDepsProvider>
 		</QueryProvider>
 	</StrictMode>

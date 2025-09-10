@@ -14,6 +14,7 @@ import { Route as AppRouteImport } from './pages/_app'
 import { Route as AppIndexRouteImport } from './pages/_app/index'
 import { Route as AuthRegisterRouteImport } from './pages/_auth/register'
 import { Route as AuthLoginRouteImport } from './pages/_auth/login'
+import { Route as AuthForbiddenRouteImport } from './pages/_auth/forbidden'
 import { Route as AuthAppRouteImport } from './pages/_auth/_app'
 import { Route as AppClientsRouteImport } from './pages/_app/clients'
 import { Route as AppContentAssetsRouteImport } from './pages/_app/content/assets'
@@ -41,6 +42,11 @@ const AuthLoginRoute = AuthLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => AuthRoute,
 } as any)
+const AuthForbiddenRoute = AuthForbiddenRouteImport.update({
+  id: '/forbidden',
+  path: '/forbidden',
+  getParentRoute: () => AuthRoute,
+} as any)
 const AuthAppRoute = AuthAppRouteImport.update({
   id: '/_app',
   getParentRoute: () => AuthRoute,
@@ -58,6 +64,7 @@ const AppContentAssetsRoute = AppContentAssetsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/clients': typeof AppClientsRoute
+  '/forbidden': typeof AuthForbiddenRoute
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
   '/': typeof AppIndexRoute
@@ -65,6 +72,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/clients': typeof AppClientsRoute
+  '/forbidden': typeof AuthForbiddenRoute
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
   '/': typeof AppIndexRoute
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteWithChildren
   '/_app/clients': typeof AppClientsRoute
   '/_auth/_app': typeof AuthAppRoute
+  '/_auth/forbidden': typeof AuthForbiddenRoute
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/register': typeof AuthRegisterRoute
   '/_app/': typeof AppIndexRoute
@@ -83,15 +92,28 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/clients' | '/login' | '/register' | '/' | '/content/assets'
+  fullPaths:
+    | '/clients'
+    | '/forbidden'
+    | '/login'
+    | '/register'
+    | '/'
+    | '/content/assets'
   fileRoutesByTo: FileRoutesByTo
-  to: '/clients' | '/login' | '/register' | '/' | '/content/assets'
+  to:
+    | '/clients'
+    | '/forbidden'
+    | '/login'
+    | '/register'
+    | '/'
+    | '/content/assets'
   id:
     | '__root__'
     | '/_app'
     | '/_auth'
     | '/_app/clients'
     | '/_auth/_app'
+    | '/_auth/forbidden'
     | '/_auth/login'
     | '/_auth/register'
     | '/_app/'
@@ -140,6 +162,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/_auth/forbidden': {
+      id: '/_auth/forbidden'
+      path: '/forbidden'
+      fullPath: '/forbidden'
+      preLoaderRoute: typeof AuthForbiddenRouteImport
+      parentRoute: typeof AuthRoute
+    }
     '/_auth/_app': {
       id: '/_auth/_app'
       path: ''
@@ -180,12 +209,14 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 interface AuthRouteChildren {
   AuthAppRoute: typeof AuthAppRoute
+  AuthForbiddenRoute: typeof AuthForbiddenRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthRegisterRoute: typeof AuthRegisterRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
   AuthAppRoute: AuthAppRoute,
+  AuthForbiddenRoute: AuthForbiddenRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthRegisterRoute: AuthRegisterRoute,
 }

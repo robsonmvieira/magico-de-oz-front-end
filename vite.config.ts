@@ -31,6 +31,16 @@ export default defineConfig({
 	},
 	server: {
 		port: 3000,
-		host: true
+		host: true,
+		hmr: {
+			overlay: true
+		},
+		watch: {
+			usePolling: false,
+			ignored: ['**/node_modules/**', '**/.git/**']
+		}
+	},
+	optimizeDeps: {
+		include: ['react', 'react-dom']
 	}
 })

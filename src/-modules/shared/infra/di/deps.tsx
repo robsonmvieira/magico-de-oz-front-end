@@ -1,5 +1,6 @@
 import {
 	createContext,
+	type JSX,
 	type PropsWithChildren,
 	useContext,
 	useMemo
@@ -13,7 +14,9 @@ type AppDeps = {
 
 const DepsContext = createContext<AppDeps | null>(null)
 
-export function AppDepsProvider({ children }: PropsWithChildren): JSX.Element {
+export function AppDepsProvider({
+	children
+}: Readonly<PropsWithChildren>): JSX.Element {
 	const deps = useMemo<AppDeps>(() => ({ http: new KyHttpClient() }), [])
 	return <DepsContext.Provider value={deps}>{children}</DepsContext.Provider>
 }
