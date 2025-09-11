@@ -1,3 +1,5 @@
+/** biome-ignore-all lint/suspicious/noDebugger: debugger statement for debugging purposes */
+
 import { useCreateAssets } from '@/-modules/assets/application/mutations/use-create-assets'
 import { useAssetStore } from '@/-modules/assets/infra/store/asset.store'
 import { useToast } from '@/-modules/shared/application/hooks'
@@ -17,14 +19,24 @@ import {
 } from '@/components/ui/drawer'
 import { Input } from '@/components/ui/input'
 import { TabsContent } from '@/components/ui/tabs'
-import { Download, ExternalLink, FileText, Loader2, Star } from 'lucide-react'
+import type { HTTPError } from 'ky'
+import {
+	Download,
+	ExternalLink,
+	FileText,
+	Loader2,
+	Star,
+	Trash
+} from 'lucide-react'
 import type { FormEvent } from 'react'
 import { useEffect, useState } from 'react'
+import { useDeleteAssets } from '../../../mutations/use-delete-assets'
 import { useUpdateFavoriteAssets } from '../../../mutations/use-update-favorite-assets'
 export function ContentScrapping() {
 	const toast = useToast()
 	const createAssetMutation = useCreateAssets()
 	const updateFavoriteMutation = useUpdateFavoriteAssets()
+	const deleteAssetMutation = useDeleteAssets()
 	const isOpen = useAssetStore(state => state.isDrawerOpen)
 	const closeDrawer = useAssetStore(state => state.closeDrawer)
 	const selectedAsset = useAssetStore(state => state.selectedAsset)
@@ -116,6 +128,40 @@ export function ContentScrapping() {
 		setPdfError(false)
 	}
 
+	const handleDeleteAsset = () => {
+		deleteAssetMutation.mutate(
+			{
+				id: selectedAsset?.id as string
+			},
+			{
+				onSuccess: () => {
+					toast.success('Asset deletado com sucesso!', {
+						description: 'O asset foi deletado com sucesso.',
+						duration: 4000
+					})
+				},
+				onError: (err: unknown) => {
+					const httpError = err as HTTPError
+
+					const not_found_status = 404
+					if (httpError.response?.status === not_found_status) {
+						toast.error('Asset não encontrado', {
+							description: 'O asset não foi encontrado.',
+							duration: 4000
+						})
+
+						return
+					}
+					console.error('Erro ao deletar asset:', httpError)
+					toast.error('Erro ao deletar asset', {
+						description: 'Tente novamente em alguns instantes.',
+						duration: 4000
+					})
+				}
+			}
+		)
+	}
+
 	const handleDownloadPdf = () => {
 		if (selectedAsset?.file_url) {
 			const link = document.createElement('a')
@@ -140,7 +186,6 @@ export function ContentScrapping() {
 	}
 
 	useEffect(() => {
-		console.log('selectedAsset', selectedAsset)
 		if (selectedAsset) {
 			setPdfLoading(true)
 			setPdfError(false)
@@ -295,6 +340,15 @@ export function ContentScrapping() {
 							>
 								<Star className='w-4 h-4' />
 								{selectedAsset?.is_favorite ? 'Desfavoritar' : 'Favoritar'}
+							</Button>
+							<Button
+								variant='destructive'
+								onClick={handleDeleteAsset}
+								disabled={!selectedAsset?.id}
+								className='flex items-center gap-2 h-12 cursor-pointer'
+							>
+								<Trash className='w-4 h-4' />
+								Deletar
 							</Button>
 						</div>
 						<DrawerClose asChild>
