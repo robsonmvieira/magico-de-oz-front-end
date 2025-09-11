@@ -30,7 +30,7 @@ export function SidebarAssets() {
 				type='single'
 				collapsible
 				className='w-full'
-				defaultValue='item-1'
+				defaultValue='history'
 			>
 				<AccordionItem value='favorites'>
 					<AccordionTrigger className='text-sm font-semibold text-grayscale-800 cursor-pointer'>

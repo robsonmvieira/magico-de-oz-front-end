@@ -87,9 +87,7 @@ export function ContentScrapping() {
 						duration: 4000
 					})
 					// Limpar formulário
-					const form = document.querySelector('form') as HTMLFormElement
-					form?.reset()
-					// Fechar drawer
+					form.reset()
 				},
 				onError: (error: unknown) => {
 					toast.error('Erro ao processar solicitação', {
