@@ -11,7 +11,6 @@ interface TryNowCardProps {
 
 export function TryNowCard({
 	icon: Icon,
-	title,
 	description,
 	onClick,
 	disabled = false
