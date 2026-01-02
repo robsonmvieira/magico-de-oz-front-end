@@ -2,6 +2,8 @@
 
 Configure as regras de proteção de branch no GitHub para garantir a qualidade do código antes de fazer merge.
 
+> **Nota**: Configuração para desenvolvedor solo - sem requisitos de code review, mas com validação obrigatória de CI/CD.
+
 ## Como Configurar
 
 Vá em: **Settings** → **Branches** → **Add branch protection rule**
@@ -13,9 +15,8 @@ Vá em: **Settings** → **Branches** → **Add branch protection rule**
 ### Configurações Obrigatórias:
 
 - ✅ **Require a pull request before merging**
-  - Require approvals: **2**
-  - Dismiss stale pull request approvals when new commits are pushed
-  - Require review from Code Owners
+  - Require approvals: **0** (desenvolvedor solo)
+  - ⚠️ Allow specified actors to bypass pull request requirements (para emergências)
 
 - ✅ **Require status checks to pass before merging**
   - Require branches to be up to date before merging
@@ -27,17 +28,10 @@ Vá em: **Settings** → **Branches** → **Add branch protection rule**
     - `E2E Tests with Playwright`
     - `Quality Gate`
 
-- ✅ **Require conversation resolution before merging**
+- ✅ **Require linear history** (mantém histórico limpo)
 
-- ✅ **Require signed commits**
-
-- ✅ **Require linear history**
-
-- ✅ **Do not allow bypassing the above settings**
-  - Include administrators
-
-- ✅ **Restrict who can push to matching branches**
-  - Only allow: Release Managers / DevOps Team
+- ⚠️ **Allow force pushes** (opcional, apenas você)
+  - Specify who can force push: Apenas você
 
 ---
 
@@ -46,8 +40,7 @@ Vá em: **Settings** → **Branches** → **Add branch protection rule**
 ### Configurações Obrigatórias:
 
 - ✅ **Require a pull request before merging**
-  - Require approvals: **1**
-  - Dismiss stale pull request approvals when new commits are pushed
+  - Require approvals: **0** (desenvolvedor solo)
 
 - ✅ **Require status checks to pass before merging**
   - Require branches to be up to date before merging
@@ -58,8 +51,6 @@ Vá em: **Settings** → **Branches** → **Add branch protection rule**
     - `Unit & Component Tests`
     - `E2E Tests with Playwright`
 
-- ✅ **Require conversation resolution before merging**
-
 - ✅ **Require linear history**
 
 ---
@@ -69,7 +60,7 @@ Vá em: **Settings** → **Branches** → **Add branch protection rule**
 ### Configurações Obrigatórias:
 
 - ✅ **Require a pull request before merging**
-  - Require approvals: **1**
+  - Require approvals: **0** (desenvolvedor solo)
 
 - ✅ **Require status checks to pass before merging**
   - Status checks required:
@@ -77,8 +68,6 @@ Vá em: **Settings** → **Branches** → **Add branch protection rule**
     - `TypeScript Type Check`
     - `Build Application`
     - `Unit & Component Tests`
-
-- ✅ **Require conversation resolution before merging**
 
 ---
 
@@ -93,19 +82,18 @@ feature/xxx → develop → homolog → main
 ### 1. Feature → Develop
 - Criar PR da feature para develop
 - CI rodará automaticamente
-- 1 aprovação necessária
-- Merge após CI passar
+- ✅ Merge após CI passar (sem aprovação necessária)
 
 ### 2. Develop → Homolog
 - Criar PR de develop para homolog
 - CI + CD rodará
-- 1 aprovação necessária
+- ✅ Merge após CI passar
 - Deploy automático para ambiente de homologação
 
 ### 3. Homolog → Main
 - Criar PR de homolog para main
-- CI + CD rodará
-- 2 aprovações necessárias
+- CI + CD rodará com todos os testes
+- ✅ Merge após CI passar
 - Deploy automático para produção
 - Release criada automaticamente
 
@@ -150,34 +138,32 @@ Configure em: **Settings** → **Environments**
 
 ### 1. `development`
 - URL: https://dev.yourapp.com
-- No required reviewers
+- Required reviewers: **0** (desenvolvedor solo)
 
 ### 2. `homologation`
 - URL: https://homolog.yourapp.com
-- Required reviewers: 1
+- Required reviewers: **0** (desenvolvedor solo)
+- Wait timer: 0 minutes (opcional: adicionar 2-5 min para revisar antes do deploy)
 
 ### 3. `production`
 - URL: https://yourapp.com
-- Required reviewers: 2
-- Wait timer: 5 minutes
+- Required reviewers: **0** (desenvolvedor solo)
+- ⚠️ Wait timer: **5 minutes** (recomendado para dar tempo de cancelar se necessário)
 - Deployment branches: Only `main`
 
 ---
 
-## CODEOWNERS
+## CODEOWNERS (Opcional)
 
-Crie o arquivo `.github/CODEOWNERS`:
+> Como você é o único desenvolvedor, não é necessário criar o arquivo CODEOWNERS agora.
+> Quando o time crescer, crie o arquivo `.github/CODEOWNERS`:
 
 ```
-# Default owners
-* @team-leads
+# Default owner
+* @seu-usuario-github
 
-# Frontend
-/src/ @frontend-team
-/src/components/ @ui-team
-
-# Infrastructure
-/.github/ @devops-team
-/vite.config.ts @devops-team
-/package.json @tech-leads
+# Quando tiver time:
+# /src/ @frontend-team
+# /src/components/ @ui-team
+# /.github/ @devops-team
 ```
