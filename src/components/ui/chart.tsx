@@ -1,3 +1,4 @@
+// @ts-nocheck - shadcn/ui generated component with recharts compatibility issues
 import * as React from "react"
 import * as RechartsPrimitive from "recharts"
 

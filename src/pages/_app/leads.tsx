@@ -65,6 +65,6 @@ function AllLeads() {
 	)
 }
 
-export const Route = createFileRoute('/_app/leads/')({
+export const Route = createFileRoute('/_app/leads')({
 	component: AllLeads
 })
