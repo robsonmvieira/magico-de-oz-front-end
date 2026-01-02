@@ -1,5 +1,5 @@
 import { ArrowUp } from 'lucide-react'
-import type { DashboardKpiProps } from './kpi'
+import type { DashboardKpiProps } from './dashboard-kpi'
 
 export const fakeCardData: DashboardKpiProps[] = [
 	{
