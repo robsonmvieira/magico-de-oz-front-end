@@ -12,7 +12,7 @@ import { useListAssets } from '../../queries/use-list-assets'
 
 export function SidebarAssets() {
 	const { data } = useListAssets()
-	const setSelectedAsset = useAssetStore(state => state.setSelectedItem)
+	const setSelectedAsset = useAssetStore(state => state.setSelectedAsset)
 	const response = data?.data
 	const handleTruncate = (text: string) => {
 		return text?.length > 40 ? `${text?.slice(0, 40)}...` : text
