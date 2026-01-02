@@ -1,5 +1,5 @@
-import type { Response } from "../../domain/classes";
-import type { HttpClient, RequestOptions } from "../http/http-client";
+import type { Response } from '../../domain/classes'
+import type { HttpClient, RequestOptions } from '../http/http-client'
 
 export abstract class BaseRepository {
 	constructor(
