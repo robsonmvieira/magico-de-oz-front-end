@@ -5,5 +5,3 @@ export const queryKeys = {
 		byId: (id: string) => ['assets', 'byId', id] as const
 	}
 }
-
-
