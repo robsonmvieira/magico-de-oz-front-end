@@ -4,6 +4,7 @@ export type RequestOptions = {
 	searchParams?: Record<string, unknown>
 	headers?: Record<string, string>
 	json?: unknown
+	body?: FormData
 }
 
 export interface HttpClient {
