@@ -1,3 +1,4 @@
+import { File, Star } from 'lucide-react'
 import type { Asset } from '@/-modules/assets/domain/use-cases/create-assets'
 import { useAssetStore } from '@/-modules/assets/infra/store/asset.store'
 import {
@@ -7,7 +8,6 @@ import {
 	AccordionTrigger
 } from '@/components/ui/accordion'
 import { Separator } from '@/components/ui/separator'
-import { File, Star } from 'lucide-react'
 import { useListAssets } from '../../queries/use-list-assets'
 
 export function SidebarAssets() {

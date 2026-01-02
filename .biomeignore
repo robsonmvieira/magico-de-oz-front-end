@@ -1,0 +1,17 @@
+node_modules
+dist
+build
+.next
+.history
+playwright-report
+coverage
+.git
+.husky
+**/routeTree.gen.ts
+**/*.gen.ts
+src/components/ui
+src/lib
+src/hooks
+src/index.css
+src/styles
+components.json

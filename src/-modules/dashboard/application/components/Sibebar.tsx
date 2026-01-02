@@ -1,3 +1,4 @@
+import { Outlet } from '@tanstack/react-router'
 import {
 	Breadcrumb,
 	BreadcrumbItem,
@@ -10,7 +11,6 @@ import {
 	SidebarProvider,
 	SidebarTrigger
 } from '@/components/ui/sidebar'
-import { Outlet } from '@tanstack/react-router'
 import { AppSidebar } from './app-sidebar'
 
 export function SidebarComponent() {

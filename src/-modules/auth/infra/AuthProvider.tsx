@@ -1,4 +1,4 @@
-import type { PropsWithChildren } from 'react'
+import type { PropsWithChildren, ReactElement } from 'react'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { useDeps } from '@/-modules/shared/infra/di/deps'
 import { isAuthEnabled } from '@/-modules/shared/infra/env/flags'
@@ -14,7 +14,7 @@ type AuthState = {
 
 const AuthContext = createContext<AuthState | null>(null)
 
-export function AuthProvider({ children }: PropsWithChildren): JSX.Element {
+export function AuthProvider({ children }: PropsWithChildren): ReactElement {
 	const { http } = useDeps()
 	const [user, setUser] = useState<User | null>(null)
 

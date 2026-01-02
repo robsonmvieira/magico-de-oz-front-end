@@ -1,3 +1,4 @@
+import { Minus, Plus } from 'lucide-react'
 import Logo from '@/assets/Logo.svg'
 import { Button } from '@/components/ui/button'
 import {
@@ -19,7 +20,6 @@ import {
 	SidebarRail
 } from '@/components/ui/sidebar'
 import { cn } from '@/lib/utils'
-import { Minus, Plus } from 'lucide-react'
 import { crmNavData } from './menu-options'
 import { SearchForm } from './search-form'
 
