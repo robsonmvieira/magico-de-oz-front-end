@@ -1,3 +1,4 @@
+import { Minus, Plus } from 'lucide-react'
 import Logo from '@/assets/Logo.svg'
 import { Button } from '@/components/ui/button'
 import {
@@ -19,7 +20,6 @@ import {
 	SidebarRail
 } from '@/components/ui/sidebar'
 import { cn } from '@/lib/utils'
-import { Minus, Plus } from 'lucide-react'
 import { crmNavData } from './menu-options'
 import { SearchForm } from './search-form'
 
@@ -62,7 +62,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
 							if (!item.items?.length) {
 								return (
-									<SidebarMenuItem key={item.title}>
+									<SidebarMenuItem key={item.url}>
 										<SidebarMenuButton
 											asChild
 											className={cn(
@@ -81,7 +81,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
 							return (
 								<Collapsible
-									key={item.title}
+									key={item.url}
 									defaultOpen={index === 0}
 									className='group/collapsible'
 								>
@@ -104,7 +104,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 												<SidebarMenuSub>
 													{item.items.map(subItem => (
 														<SidebarMenuSubItem
-															key={subItem.title}
+															key={subItem.url}
 															className='cursor-pointer'
 														>
 															<SidebarMenuSubButton asChild>

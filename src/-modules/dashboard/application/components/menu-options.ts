@@ -8,7 +8,7 @@ import {
 	// MessageSquare,
 	// PieChart,
 	TextSelect,
-	Users,
+	Users
 } from 'lucide-react'
 
 export const crmNavData = {
@@ -41,39 +41,39 @@ export const crmNavData = {
 			]
 		},
 		{
-			title: 'Audience',
-			url: '/audience',
+			title: 'Leads',
+			url: '/leads',
 			icon: Users,
 			isActive: false,
 			items: [
 				{
-					title: 'All contacts',
-					url: '/audience/all'
+					title: 'All leads',
+					url: '/leads '
 				},
 				{
-					title: 'New contact',
-					url: '/audience/new'
+					title: 'New lead',
+					url: '/leads/new'
 				},
 				{
-					title: 'Import contacts',
-					url: '/audience/import'
+					title: 'Import leads',
+					url: '/leads/import'
 				},
-        {
-          title: 'Tags',
-          url: '/audience/tags'
-        },
-        {
-          title: 'Segments',
-          url: '/audience/segments'
-        },
-        {
-          title: 'Groups',
-          url: '/audience/groups'
-        },
-        {
-          title: 'Survey',
-          url: '/audience/survey'
-        }
+				{
+					title: 'Tags',
+					url: '/leads/tags'
+				},
+				{
+					title: 'Segments',
+					url: '/leads/segments'
+				},
+				{
+					title: 'Groups',
+					url: '/leads/groups'
+				},
+				{
+					title: 'Survey',
+					url: '/audience/survey'
+				}
 			]
 		},
 		{
@@ -108,7 +108,7 @@ export const crmNavData = {
 			items: [
 				{
 					title: 'create with Tanos',
-					url: '/tanos'
+					url: '/tanos/tanos'
 				}
 			]
 		}
