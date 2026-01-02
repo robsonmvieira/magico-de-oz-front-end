@@ -1,47 +1,39 @@
-/** biome-ignore-all lint/suspicious/noDebugger: debugger statement for debugging purposes */
-
+import { FileText } from 'lucide-react'
+import type { FormEvent } from 'react'
 import { useCreateAssets } from '@/-modules/assets/application/mutations/use-create-assets'
 import { useAssetStore } from '@/-modules/assets/infra/store/asset.store'
+import { DrawerPreviewBase } from '@/-modules/shared/application/components/drawer-preview'
 import { useToast } from '@/-modules/shared/application/hooks'
 import {
 	extractYouTubeVideoId,
 	isValidYouTubeVideoUrl,
 	isYouTubeDomain
 } from '@/-modules/shared/domain/utils/youtube-validator'
-import { Button } from '@/components/ui/button'
-import {
-	Drawer,
-	DrawerClose,
-	DrawerContent,
-	DrawerFooter,
-	DrawerHeader,
-	DrawerTitle
-} from '@/components/ui/drawer'
-import { Input } from '@/components/ui/input'
-import { TabsContent } from '@/components/ui/tabs'
-import type { HTTPError } from 'ky'
-import {
-	Download,
-	ExternalLink,
-	FileText,
-	Loader2,
-	Star,
-	Trash
-} from 'lucide-react'
-import type { FormEvent } from 'react'
-import { useEffect, useState } from 'react'
-import { useDeleteAssets } from '../../../mutations/use-delete-assets'
-import { useUpdateFavoriteAssets } from '../../../mutations/use-update-favorite-assets'
+import { useAssetDrawerActions } from '../../../hooks/useAssetDrawerActions'
+import { AssetPdfRenderer } from '../../renderers/asset-pdf-renderer'
+import { CreateAssetsForm } from './components'
+import { ButtonActions, DateInfo } from './components/drawer-components'
+
 export function ContentScrapping() {
 	const toast = useToast()
 	const createAssetMutation = useCreateAssets()
-	const updateFavoriteMutation = useUpdateFavoriteAssets()
-	const deleteAssetMutation = useDeleteAssets()
 	const isOpen = useAssetStore(state => state.isDrawerOpen)
 	const closeDrawer = useAssetStore(state => state.closeDrawer)
-	const selectedAsset = useAssetStore(state => state.selectedAsset)
-	const [pdfLoading, setPdfLoading] = useState(true)
-	const [pdfError, setPdfError] = useState(false)
+	const selectedAsset = useAssetStore(state => state.selectedItem)
+
+	const {
+		pdfLoading,
+		pdfError,
+		handleUpdateFavorite,
+		handleDeleteAsset,
+		handleOpenFullView,
+		handlePdfLoad,
+		handleCancel
+	} = useAssetDrawerActions({
+		selectedAsset,
+		onClose: closeDrawer
+	})
+
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		const form = e.target as HTMLFormElement
@@ -84,10 +76,6 @@ export function ContentScrapping() {
 			})
 			return
 		}
-
-		// Abrir drawer para confirmação
-		// setPendingUrl(url)
-		// setIsOpen(true)
 		createAssetMutation.mutate(
 			{
 				url: url
@@ -112,257 +100,35 @@ export function ContentScrapping() {
 		)
 	}
 
-	const handleUpdateFavorite = () => {
-		updateFavoriteMutation.mutate({
-			id: selectedAsset?.id as string,
-			is_favorite: !selectedAsset?.is_favorite
-		})
-		toast.success('Favorito atualizado com sucesso!', {
-			description: 'O favorito foi atualizado com sucesso.',
-			duration: 4000
-		})
-	}
-	const handleCancel = () => {
-		closeDrawer()
-		setPdfLoading(true)
-		setPdfError(false)
-	}
-
-	const handleDeleteAsset = () => {
-		deleteAssetMutation.mutate(
-			{
-				id: selectedAsset?.id as string
-			},
-			{
-				onSuccess: () => {
-					toast.success('Asset deletado com sucesso!', {
-						description: 'O asset foi deletado com sucesso.',
-						duration: 4000
-					})
-				},
-				onError: (err: unknown) => {
-					const httpError = err as HTTPError
-
-					const not_found_status = 404
-					if (httpError.response?.status === not_found_status) {
-						toast.error('Asset não encontrado', {
-							description: 'O asset não foi encontrado.',
-							duration: 4000
-						})
-
-						return
-					}
-					console.error('Erro ao deletar asset:', httpError)
-					toast.error('Erro ao deletar asset', {
-						description: 'Tente novamente em alguns instantes.',
-						duration: 4000
-					})
-				}
-			}
-		)
-	}
-
-	const handleDownloadPdf = () => {
-		if (selectedAsset?.file_url) {
-			const link = document.createElement('a')
-			link.href = selectedAsset.file_url
-			link.download = `${selectedAsset.title || 'document'}.pdf`
-			link.target = '_blank'
-			document.body.appendChild(link)
-			link.click()
-			document.body.removeChild(link)
-		}
-	}
-
-	const handleOpenFullView = () => {
-		if (selectedAsset?.file_url) {
-			window.open(selectedAsset.file_url, '_blank')
-		}
-	}
-
-	const handlePdfLoad = () => {
-		setPdfLoading(false)
-		setPdfError(false)
-	}
-
-	useEffect(() => {
-		if (selectedAsset) {
-			setPdfLoading(true)
-			setPdfError(false)
-		}
-	}, [selectedAsset])
 	return (
 		<>
-			<TabsContent
-				value='content-scrapping'
-				className='bg-white h-full min-h-0 rounded-lg p-4 overflow-hidden'
+			<CreateAssetsForm
+				onSubmit={handleSubmit}
+				isPending={createAssetMutation.isPending}
+			/>
+			<DrawerPreviewBase
+				isOpen={isOpen}
+				onClose={handleCancel}
+				selectedItem={selectedAsset}
+				icon={<FileText className='w-10 h-10' />}
+				footerInfo={<DateInfo date={selectedAsset?.created_at} />}
+				footerActions={
+					<ButtonActions
+						handleOpenFullView={handleOpenFullView}
+						handleUpdateFavorite={handleUpdateFavorite}
+						handleDeleteAsset={handleDeleteAsset}
+						selectedAsset={selectedAsset}
+					/>
+				}
 			>
-				<div className='flex flex-col gap-4 w-full h-full'>
-					<h1 className='text-2xl text-primary-500 font-bold'>
-						Put the URL of the Youtube video!
-					</h1>
-					<div className='flex gap-2'>
-						<form className='w-full flex gap-2' onSubmit={handleSubmit}>
-							<Input
-								name='url'
-								className='flex-1 bg-white h-12'
-								type='text'
-								placeholder='Enter the URL of the Youtube video'
-							/>
-							<Button
-								className='h-12 font-medium cursor-pointer'
-								type='submit'
-								disabled={createAssetMutation.isPending}
-							>
-								{createAssetMutation.isPending
-									? 'Processing...'
-									: 'Get Content'}
-							</Button>
-						</form>
-					</div>
-				</div>
-			</TabsContent>
-			<Drawer
-				open={isOpen}
-				onOpenChange={open => !open && handleCancel()}
-				direction='right'
-			>
-				<DrawerContent className='w-[800px] !max-w-[800px] sm:!max-w-[800px] h-screen flex flex-col'>
-					<DrawerHeader className='flex-shrink-0'>
-						<DrawerTitle className='text-lg font-medium flex items-center gap-2'>
-							<FileText className='w-10 h-10' />
-							{selectedAsset?.title}
-						</DrawerTitle>
-					</DrawerHeader>
-
-					<div className='flex-1 px-6 pb-4 min-h-0'>
-						{selectedAsset?.file_url ? (
-							<div className='relative w-full h-full border rounded-lg overflow-hidden bg-gray-50'>
-								{pdfLoading && (
-									<div className='absolute inset-0 flex items-center justify-center bg-white/80 z-10'>
-										<div className='flex items-center gap-2 text-gray-600'>
-											<Loader2 className='w-5 h-5 animate-spin' />
-											<span>Carregando PDF...</span>
-										</div>
-									</div>
-								)}
-
-								{pdfError ? (
-									<div className='absolute inset-0 flex items-center justify-center'>
-										<div className='text-center p-6'>
-											<FileText className='w-12 h-12 text-gray-400 mx-auto mb-4' />
-											<h3 className='font-medium text-gray-900 mb-2'>
-												Erro ao carregar PDF
-											</h3>
-											<p className='text-sm text-gray-600 mb-4'>
-												Não foi possível carregar o preview do PDF.
-											</p>
-											<Button
-												variant='outline'
-												size='sm'
-												onClick={handleOpenFullView}
-												className='flex items-center gap-2'
-											>
-												<ExternalLink className='w-4 h-4' />
-												Abrir em nova aba
-											</Button>
-										</div>
-									</div>
-								) : (
-									<object
-										className='w-full h-full'
-										data={selectedAsset.file_url}
-										type='application/pdf'
-										onLoad={handlePdfLoad}
-									>
-										<div className='flex items-center justify-center h-full'>
-											<div className='text-center p-6'>
-												<FileText className='w-12 h-12 text-gray-400 mx-auto mb-4' />
-												<h3 className='font-medium text-gray-900 mb-2'>
-													PDF não suportado
-												</h3>
-												<p className='text-sm text-gray-600 mb-4'>
-													Seu navegador não suporta visualização de PDF.
-												</p>
-												<Button
-													variant='outline'
-													size='sm'
-													onClick={handleOpenFullView}
-													className='flex items-center gap-2'
-												>
-													<ExternalLink className='w-4 h-4' />
-													Abrir em nova aba
-												</Button>
-											</div>
-										</div>
-									</object>
-								)}
-							</div>
-						) : (
-							<div className='flex items-center justify-center h-full border rounded-lg bg-gray-50'>
-								<div className='text-center p-6'>
-									<FileText className='w-12 h-12 text-gray-400 mx-auto mb-4' />
-									<h3 className='font-medium text-gray-900 mb-2'>
-										Nenhum arquivo disponível
-									</h3>
-									<p className='text-sm text-gray-600'>
-										O arquivo PDF não está disponível para visualização.
-									</p>
-								</div>
-							</div>
-						)}
-					</div>
-
-					<DrawerFooter className='flex-shrink-0'>
-						<div className='flex gap-2'>
-							<Button
-								onClick={handleOpenFullView}
-								disabled={!selectedAsset?.file_url}
-								className='flex items-center gap-2 h-12 cursor-pointer'
-							>
-								<ExternalLink className='w-4 h-4' />
-								Visão completa
-							</Button>
-							<Button
-								variant='outline'
-								onClick={handleDownloadPdf}
-								disabled={!selectedAsset?.file_url}
-								className='flex items-center gap-2 h-12 cursor-pointer'
-							>
-								<Download className='w-4 h-4' />
-								Download
-							</Button>
-							<Button
-								variant='secondary'
-								onClick={handleUpdateFavorite}
-								disabled={!selectedAsset?.file_url || !selectedAsset?.id}
-								className='flex items-center gap-2 h-12 cursor-pointer'
-							>
-								<Star className='w-4 h-4' />
-								{selectedAsset?.is_favorite ? 'Desfavoritar' : 'Favoritar'}
-							</Button>
-							<Button
-								variant='destructive'
-								onClick={handleDeleteAsset}
-								disabled={!selectedAsset?.id}
-								className='flex items-center gap-2 h-12 cursor-pointer'
-							>
-								<Trash className='w-4 h-4' />
-								Deletar
-							</Button>
-						</div>
-						<DrawerClose asChild>
-							<Button
-								variant='outline'
-								onClick={handleCancel}
-								className='h-12 cursor-pointer'
-							>
-								Fechar
-							</Button>
-						</DrawerClose>
-					</DrawerFooter>
-				</DrawerContent>
-			</Drawer>
+				<AssetPdfRenderer
+					asset={selectedAsset}
+					pdfLoading={pdfLoading}
+					pdfError={pdfError}
+					onPdfLoad={handlePdfLoad}
+					onOpenFullView={handleOpenFullView}
+				/>
+			</DrawerPreviewBase>
 		</>
 	)
 }

@@ -1,8 +1,8 @@
 import type { Response } from '@/-modules/shared/domain/classes'
 import type { UseCase } from '@/-modules/shared/domain/usecase'
-import type { AssetsRepository, Asset } from '../../infra/assets.repository'
+import type { Asset, AssetsRepository } from '../../infra/assets.repository'
 
-export type UpdateFavoriteUseCaseInput = { 
+export type UpdateFavoriteUseCaseInput = {
 	id: string
 	is_favorite: boolean
 }
