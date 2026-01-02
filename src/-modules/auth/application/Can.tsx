@@ -1,8 +1,9 @@
 import type { PropsWithChildren, ReactNode } from 'react'
+import type { Role } from '../domain/types'
 import { useAuthorization } from './useAuthorization'
 
 type CanProps = PropsWithChildren<{
-	roles?: string[]
+	roles?: Role[]
 	fallback?: ReactNode
 }>
 
