@@ -16,7 +16,8 @@ export const YOUTUBE_DOMAIN_REGEX = /^(https?:\/\/)?(www\.)?youtube\.com/
  * - http:// (versões sem HTTPS)
  * - www. (versões sem www)
  */
-export const YOUTUBE_VIDEO_URL_REGEX = /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|embed\/|v\/)|youtu\.be\/)[\w-]+(&[\w=]*)?$/
+export const YOUTUBE_VIDEO_URL_REGEX =
+	/^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|embed\/|v\/)|youtu\.be\/)[\w-]+(&[\w=]*)?$/
 
 /**
  * Valida se uma string é uma URL do YouTube (qualquer página)
@@ -27,7 +28,7 @@ export function isYouTubeDomain(url: string): boolean {
 	if (!url || typeof url !== 'string') {
 		return false
 	}
-	
+
 	const trimmedUrl = url.trim()
 	return YOUTUBE_DOMAIN_REGEX.test(trimmedUrl)
 }
@@ -41,7 +42,7 @@ export function isValidYouTubeVideoUrl(url: string): boolean {
 	if (!url || typeof url !== 'string') {
 		return false
 	}
-	
+
 	const trimmedUrl = url.trim()
 	return YOUTUBE_VIDEO_URL_REGEX.test(trimmedUrl)
 }
@@ -63,33 +64,33 @@ export function extractYouTubeVideoId(url: string): string | null {
 	if (!isValidYouTubeVideoUrl(url)) {
 		return null
 	}
-	
+
 	const trimmedUrl = url.trim()
-	
+
 	// Para youtu.be/VIDEO_ID
 	const youtuBeMatch = trimmedUrl.match(/youtu\.be\/([\w-]+)/)
 	if (youtuBeMatch) {
 		return youtuBeMatch[1]
 	}
-	
+
 	// Para youtube.com/watch?v=VIDEO_ID
 	const watchMatch = trimmedUrl.match(/[?&]v=([\w-]+)/)
 	if (watchMatch) {
 		return watchMatch[1]
 	}
-	
+
 	// Para youtube.com/embed/VIDEO_ID
 	const embedMatch = trimmedUrl.match(/\/embed\/([\w-]+)/)
 	if (embedMatch) {
 		return embedMatch[1]
 	}
-	
+
 	// Para youtube.com/v/VIDEO_ID
 	const vMatch = trimmedUrl.match(/\/v\/([\w-]+)/)
 	if (vMatch) {
 		return vMatch[1]
 	}
-	
+
 	return null
 }
 
