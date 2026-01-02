@@ -1,21 +1,21 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ],
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"],
-      "@components": ["./src/components"],
-      "@modules": ["./src/modules"],
-      "@utils": ["./src/utils"],
-      "@styles": ["./src/styles"],
-      "@types": ["./src/types"],
-      "@hooks": ["./src/hooks"],
-      "@contexts": ["./src/contexts"],
-      "@ui": ["./src/components/ui"]
-    }
-  }
+	"files": [],
+	"references": [
+		{ "path": "./tsconfig.app.json" },
+		{ "path": "./tsconfig.node.json" }
+	],
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["./src/*"],
+			"@components": ["./src/components"],
+			"@modules": ["./src/modules"],
+			"@utils": ["./src/utils"],
+			"@styles": ["./src/styles"],
+			"@types": ["./src/types"],
+			"@hooks": ["./src/hooks"],
+			"@contexts": ["./src/contexts"],
+			"@ui": ["./src/components/ui"]
+		}
+	}
 }
