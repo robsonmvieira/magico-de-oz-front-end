@@ -1,28 +1,37 @@
 {
-  "formatter": {
-    "enabled": true,
-    "formatWithErrors": false,
-    "attributePosition": "auto",
-    "indentStyle": "tab",
-    "indentWidth": 2,
-    "lineWidth": 80,
-    "lineEnding": "lf"
-  },
-  "javascript": {
-    "formatter": {
-      "arrowParentheses":"asNeeded",
-      "bracketSameLine": false,
-      "bracketSpacing": true,
-      "jsxQuoteStyle": "single",
-      "quoteProperties": "asNeeded",
-      "semicolons": "asNeeded",
-      "trailingCommas": "none",
-      "quoteStyle": "single"
-    }
-  },
-  "json": {
-    "formatter": {
-      "trailingCommas": "none"
-    }
-  }
+	"files": {
+		"ignore": [".history/**", "node_modules/**", "dist/**", "build/**"]
+	},
+	"formatter": {
+		"enabled": true,
+		"formatWithErrors": false,
+		"attributePosition": "auto",
+		"indentStyle": "tab",
+		"indentWidth": 2,
+		"lineWidth": 80,
+		"lineEnding": "lf"
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"arrowParentheses": "asNeeded",
+			"bracketSameLine": false,
+			"bracketSpacing": true,
+			"jsxQuoteStyle": "single",
+			"quoteProperties": "asNeeded",
+			"semicolons": "asNeeded",
+			"trailingCommas": "none",
+			"quoteStyle": "single"
+		}
+	},
+	"json": {
+		"formatter": {
+			"trailingCommas": "none"
+		}
+	}
 }
