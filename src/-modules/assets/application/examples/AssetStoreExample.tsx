@@ -5,8 +5,7 @@ import { useAssetDrawer, useAssetStore } from '../hooks'
  */
 export function AssetStoreExample() {
 	// Hook principal - integra store com React Query
-	const { assets, selectedAsset, isLoading, error, createAsset, isCreating } =
-		useAssetStore()
+	const { assets, selectedAsset, isLoading, error } = useAssetStore()
 
 	// Hook específico para drawer
 	const { isOpen, pendingUrl, openDrawer, closeDrawer } = useAssetDrawer()

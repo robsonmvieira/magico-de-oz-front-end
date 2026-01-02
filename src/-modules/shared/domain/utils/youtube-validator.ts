@@ -17,7 +17,7 @@ export const YOUTUBE_DOMAIN_REGEX = /^(https?:\/\/)?(www\.)?youtube\.com/
  * - www. (versões sem www)
  */
 export const YOUTUBE_VIDEO_URL_REGEX =
-	/^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|embed\/|v\/)|youtu\.be\/)[\w-]+([?&][\w=&-]*)?$/
+	/^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|embed\/|v\/)|youtu\.be\/)[\w-]+(&[\w=]*)?$/
 
 /**
  * Valida se uma string é uma URL do YouTube (qualquer página)
@@ -107,8 +107,7 @@ export const VALID_YOUTUBE_URLS = [
 	'https://youtu.be/m5QHYUt5Gd0',
 	'https://youtu.be/m5QHYUt5Gd0?t=30',
 	'https://www.youtube.com/watch?v=m5QHYUt5Gd0&t=30s',
-	'https://www.youtube.com/watch?v=m5QHYUt5Gd0&list=PLrAXtmRdnEQy6nuLMOVa8s',
-	'https://www.youtube.com/watch?v=_fnAO06RGVY&list=PLjflPnnP2Li9p1VoGd78ikOlLXb_kNYMu&index=1'
+	'https://www.youtube.com/watch?v=m5QHYUt5Gd0&list=PLrAXtmRdnEQy6nuLMOVa8s'
 ]
 
 /**

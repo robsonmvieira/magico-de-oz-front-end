@@ -1,5 +1,5 @@
-import { SidebarComponent } from '@/-modules/dashboard/application/components/Sibebar'
 import { createFileRoute } from '@tanstack/react-router'
+import { SidebarComponent } from '@/-modules/dashboard/application/components/Sibebar'
 
 export const Route = createFileRoute('/_app')({
 	component: LayoutComponent
