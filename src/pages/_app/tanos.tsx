@@ -17,7 +17,7 @@ import { useCreateVsl } from '@/-modules/tanos/application/mutations/mutations-c
 import type { VslFormData } from '@/-modules/tanos/domain/schemas/vsl-form.schema'
 import { useVslStore } from '@/-modules/tanos/infra/store/vsl.store'
 
-export const Route = createFileRoute('/_app/tanos/')({
+export const Route = createFileRoute('/_app/tanos')({
 	component: TanosComponent
 })
 
