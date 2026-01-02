@@ -1,7 +1,7 @@
+import type { Response } from '@/-modules/shared/domain/classes'
 import { isAuthEnabled } from '@/-modules/shared/infra/env/flags'
 import type { HttpClient } from '@/-modules/shared/infra/http/http-client'
 import { BaseRepository } from '@/-modules/shared/infra/repositories/base.repository'
-import type { Response } from '@/-modules/shared/domain/classes'
 import type { User } from '../domain/types'
 
 export class AuthRepository extends BaseRepository {

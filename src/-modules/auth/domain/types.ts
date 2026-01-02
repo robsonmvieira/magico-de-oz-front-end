@@ -9,5 +9,3 @@ export type User = {
 	roles: Role[]
 	permissions?: string[]
 }
-
-

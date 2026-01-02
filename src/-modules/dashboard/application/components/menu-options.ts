@@ -41,34 +41,34 @@ export const crmNavData = {
 			]
 		},
 		{
-			title: 'Leads',
-			url: '/leads',
+			title: 'Audience',
+			url: '/audience',
 			icon: Users,
 			isActive: false,
 			items: [
 				{
-					title: 'All leads',
-					url: '/leads '
+					title: 'All contacts',
+					url: '/audience/all'
 				},
 				{
-					title: 'New lead',
-					url: '/leads/new'
+					title: 'New contact',
+					url: '/audience/new'
 				},
 				{
-					title: 'Import leads',
-					url: '/leads/import'
+					title: 'Import contacts',
+					url: '/audience/import'
 				},
 				{
 					title: 'Tags',
-					url: '/leads/tags'
+					url: '/audience/tags'
 				},
 				{
 					title: 'Segments',
-					url: '/leads/segments'
+					url: '/audience/segments'
 				},
 				{
 					title: 'Groups',
-					url: '/leads/groups'
+					url: '/audience/groups'
 				},
 				{
 					title: 'Survey',
@@ -108,7 +108,7 @@ export const crmNavData = {
 			items: [
 				{
 					title: 'create with Tanos',
-					url: '/tanos/tanos'
+					url: '/tanos'
 				}
 			]
 		}
