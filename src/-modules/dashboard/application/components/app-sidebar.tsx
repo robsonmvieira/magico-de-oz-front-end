@@ -62,7 +62,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
 							if (!item.items?.length) {
 								return (
-									<SidebarMenuItem key={item.title}>
+									<SidebarMenuItem key={item.url}>
 										<SidebarMenuButton
 											asChild
 											className={cn(
@@ -81,7 +81,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
 							return (
 								<Collapsible
-									key={item.title}
+									key={item.url}
 									defaultOpen={index === 0}
 									className='group/collapsible'
 								>
@@ -104,7 +104,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 												<SidebarMenuSub>
 													{item.items.map(subItem => (
 														<SidebarMenuSubItem
-															key={subItem.title}
+															key={subItem.url}
 															className='cursor-pointer'
 														>
 															<SidebarMenuSubButton asChild>
