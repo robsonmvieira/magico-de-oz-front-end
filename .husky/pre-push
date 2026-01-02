@@ -1,5 +1,5 @@
 echo "🧪 Running unit tests before push..."
-npm run test:run
+npx vitest run
 
 if [ $? -ne 0 ]; then
   echo "❌ Unit tests failed. Push aborted."
@@ -7,7 +7,7 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "🎭 Running E2E tests before push..."
-npm run test:e2e
+npx playwright test
 
 if [ $? -ne 0 ]; then
   echo "❌ E2E tests failed. Push aborted."
