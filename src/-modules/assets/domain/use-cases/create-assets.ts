@@ -1,6 +1,10 @@
 import type { Response } from '@/-modules/shared/domain/classes'
 import type { UseCase } from '@/-modules/shared/domain/usecase'
-import type { AssetsRepository, Asset, CreateAssetInput } from '../../infra/assets.repository'
+import type {
+	Asset,
+	AssetsRepository,
+	CreateAssetInput
+} from '../../infra/assets.repository'
 
 export type { Asset, CreateAssetInput }
 type Output = Response<Asset>

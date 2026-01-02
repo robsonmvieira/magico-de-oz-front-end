@@ -1,0 +1,10 @@
+node_modules
+dist
+build
+.next
+.history
+*.css
+playwright-report
+coverage
+.git
+.husky
