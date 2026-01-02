@@ -6,7 +6,8 @@ export class KyHttpClient implements HttpClient {
 	private mapOptions(options?: RequestOptions) {
 		const mapped: any = {
 			headers: options?.headers,
-			json: options?.json
+			json: options?.json,
+			body: options?.body
 		}
 
 		if (options?.searchParams) {
