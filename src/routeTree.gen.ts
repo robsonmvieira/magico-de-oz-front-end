@@ -16,6 +16,7 @@ import { Route as AuthRegisterRouteImport } from './pages/_auth/register'
 import { Route as AuthLoginRouteImport } from './pages/_auth/login'
 import { Route as AuthForbiddenRouteImport } from './pages/_auth/forbidden'
 import { Route as AuthAppRouteImport } from './pages/_auth/_app'
+import { Route as AppTanosRouteImport } from './pages/_app/tanos'
 import { Route as AppClientsRouteImport } from './pages/_app/clients'
 import { Route as AppContentAssetsRouteImport } from './pages/_app/content/assets'
 
@@ -51,6 +52,11 @@ const AuthAppRoute = AuthAppRouteImport.update({
   id: '/_app',
   getParentRoute: () => AuthRoute,
 } as any)
+const AppTanosRoute = AppTanosRouteImport.update({
+  id: '/tanos',
+  path: '/tanos',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppClientsRoute = AppClientsRouteImport.update({
   id: '/clients',
   path: '/clients',
@@ -64,6 +70,7 @@ const AppContentAssetsRoute = AppContentAssetsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/clients': typeof AppClientsRoute
+  '/tanos': typeof AppTanosRoute
   '/forbidden': typeof AuthForbiddenRoute
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/clients': typeof AppClientsRoute
+  '/tanos': typeof AppTanosRoute
   '/forbidden': typeof AuthForbiddenRoute
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
@@ -83,6 +91,7 @@ export interface FileRoutesById {
   '/_app': typeof AppRouteWithChildren
   '/_auth': typeof AuthRouteWithChildren
   '/_app/clients': typeof AppClientsRoute
+  '/_app/tanos': typeof AppTanosRoute
   '/_auth/_app': typeof AuthAppRoute
   '/_auth/forbidden': typeof AuthForbiddenRoute
   '/_auth/login': typeof AuthLoginRoute
@@ -94,6 +103,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/clients'
+    | '/tanos'
     | '/forbidden'
     | '/login'
     | '/register'
@@ -102,6 +112,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/clients'
+    | '/tanos'
     | '/forbidden'
     | '/login'
     | '/register'
@@ -112,6 +123,7 @@ export interface FileRouteTypes {
     | '/_app'
     | '/_auth'
     | '/_app/clients'
+    | '/_app/tanos'
     | '/_auth/_app'
     | '/_auth/forbidden'
     | '/_auth/login'
@@ -176,6 +188,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthAppRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/_app/tanos': {
+      id: '/_app/tanos'
+      path: '/tanos'
+      fullPath: '/tanos'
+      preLoaderRoute: typeof AppTanosRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/clients': {
       id: '/_app/clients'
       path: '/clients'
@@ -195,12 +214,14 @@ declare module '@tanstack/react-router' {
 
 interface AppRouteChildren {
   AppClientsRoute: typeof AppClientsRoute
+  AppTanosRoute: typeof AppTanosRoute
   AppIndexRoute: typeof AppIndexRoute
   AppContentAssetsRoute: typeof AppContentAssetsRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppClientsRoute: AppClientsRoute,
+  AppTanosRoute: AppTanosRoute,
   AppIndexRoute: AppIndexRoute,
   AppContentAssetsRoute: AppContentAssetsRoute,
 }
