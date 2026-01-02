@@ -35,7 +35,7 @@ jobs:
         run: npm ci
 
       - name: Run TypeScript check
-        run: npx tsc --noEmit
+        run: npx tsc --project tsconfig.app.json --noEmit
 
   build:
     name: Build Application
