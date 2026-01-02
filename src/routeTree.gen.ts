@@ -9,224 +9,224 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './pages/__root'
+import { Route as AuthRouteImport } from './pages/_auth'
 import { Route as AppRouteImport } from './pages/_app'
+import { Route as AppIndexRouteImport } from './pages/_app/index'
+import { Route as AuthRegisterRouteImport } from './pages/_auth/register'
+import { Route as AuthLoginRouteImport } from './pages/_auth/login'
+import { Route as AuthForbiddenRouteImport } from './pages/_auth/forbidden'
+import { Route as AuthAppRouteImport } from './pages/_auth/_app'
 import { Route as AppClientsRouteImport } from './pages/_app/clients'
 import { Route as AppContentAssetsRouteImport } from './pages/_app/content/assets'
-import { Route as AppIndexRouteImport } from './pages/_app/index'
-import { Route as AuthRouteImport } from './pages/_auth'
-import { Route as AuthAppRouteImport } from './pages/_auth/_app'
-import { Route as AuthForbiddenRouteImport } from './pages/_auth/forbidden'
-import { Route as AuthLoginRouteImport } from './pages/_auth/login'
-import { Route as AuthRegisterRouteImport } from './pages/_auth/register'
 
 const AuthRoute = AuthRouteImport.update({
-	id: '/_auth',
-	getParentRoute: () => rootRouteImport
+  id: '/_auth',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AppRoute = AppRouteImport.update({
-	id: '/_app',
-	getParentRoute: () => rootRouteImport
+  id: '/_app',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AppIndexRoute = AppIndexRouteImport.update({
-	id: '/',
-	path: '/',
-	getParentRoute: () => AppRoute
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
 } as any)
 const AuthRegisterRoute = AuthRegisterRouteImport.update({
-	id: '/register',
-	path: '/register',
-	getParentRoute: () => AuthRoute
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => AuthRoute,
 } as any)
 const AuthLoginRoute = AuthLoginRouteImport.update({
-	id: '/login',
-	path: '/login',
-	getParentRoute: () => AuthRoute
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AuthRoute,
 } as any)
 const AuthForbiddenRoute = AuthForbiddenRouteImport.update({
-	id: '/forbidden',
-	path: '/forbidden',
-	getParentRoute: () => AuthRoute
+  id: '/forbidden',
+  path: '/forbidden',
+  getParentRoute: () => AuthRoute,
 } as any)
 const AuthAppRoute = AuthAppRouteImport.update({
-	id: '/_app',
-	getParentRoute: () => AuthRoute
+  id: '/_app',
+  getParentRoute: () => AuthRoute,
 } as any)
 const AppClientsRoute = AppClientsRouteImport.update({
-	id: '/clients',
-	path: '/clients',
-	getParentRoute: () => AppRoute
+  id: '/clients',
+  path: '/clients',
+  getParentRoute: () => AppRoute,
 } as any)
 const AppContentAssetsRoute = AppContentAssetsRouteImport.update({
-	id: '/content/assets',
-	path: '/content/assets',
-	getParentRoute: () => AppRoute
+  id: '/content/assets',
+  path: '/content/assets',
+  getParentRoute: () => AppRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-	'/clients': typeof AppClientsRoute
-	'/forbidden': typeof AuthForbiddenRoute
-	'/login': typeof AuthLoginRoute
-	'/register': typeof AuthRegisterRoute
-	'/': typeof AppIndexRoute
-	'/content/assets': typeof AppContentAssetsRoute
+  '/clients': typeof AppClientsRoute
+  '/forbidden': typeof AuthForbiddenRoute
+  '/login': typeof AuthLoginRoute
+  '/register': typeof AuthRegisterRoute
+  '/': typeof AppIndexRoute
+  '/content/assets': typeof AppContentAssetsRoute
 }
 export interface FileRoutesByTo {
-	'/clients': typeof AppClientsRoute
-	'/forbidden': typeof AuthForbiddenRoute
-	'/login': typeof AuthLoginRoute
-	'/register': typeof AuthRegisterRoute
-	'/': typeof AppIndexRoute
-	'/content/assets': typeof AppContentAssetsRoute
+  '/clients': typeof AppClientsRoute
+  '/forbidden': typeof AuthForbiddenRoute
+  '/login': typeof AuthLoginRoute
+  '/register': typeof AuthRegisterRoute
+  '/': typeof AppIndexRoute
+  '/content/assets': typeof AppContentAssetsRoute
 }
 export interface FileRoutesById {
-	__root__: typeof rootRouteImport
-	'/_app': typeof AppRouteWithChildren
-	'/_auth': typeof AuthRouteWithChildren
-	'/_app/clients': typeof AppClientsRoute
-	'/_auth/_app': typeof AuthAppRoute
-	'/_auth/forbidden': typeof AuthForbiddenRoute
-	'/_auth/login': typeof AuthLoginRoute
-	'/_auth/register': typeof AuthRegisterRoute
-	'/_app/': typeof AppIndexRoute
-	'/_app/content/assets': typeof AppContentAssetsRoute
+  __root__: typeof rootRouteImport
+  '/_app': typeof AppRouteWithChildren
+  '/_auth': typeof AuthRouteWithChildren
+  '/_app/clients': typeof AppClientsRoute
+  '/_auth/_app': typeof AuthAppRoute
+  '/_auth/forbidden': typeof AuthForbiddenRoute
+  '/_auth/login': typeof AuthLoginRoute
+  '/_auth/register': typeof AuthRegisterRoute
+  '/_app/': typeof AppIndexRoute
+  '/_app/content/assets': typeof AppContentAssetsRoute
 }
 export interface FileRouteTypes {
-	fileRoutesByFullPath: FileRoutesByFullPath
-	fullPaths:
-		| '/clients'
-		| '/forbidden'
-		| '/login'
-		| '/register'
-		| '/'
-		| '/content/assets'
-	fileRoutesByTo: FileRoutesByTo
-	to:
-		| '/clients'
-		| '/forbidden'
-		| '/login'
-		| '/register'
-		| '/'
-		| '/content/assets'
-	id:
-		| '__root__'
-		| '/_app'
-		| '/_auth'
-		| '/_app/clients'
-		| '/_auth/_app'
-		| '/_auth/forbidden'
-		| '/_auth/login'
-		| '/_auth/register'
-		| '/_app/'
-		| '/_app/content/assets'
-	fileRoutesById: FileRoutesById
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/clients'
+    | '/forbidden'
+    | '/login'
+    | '/register'
+    | '/'
+    | '/content/assets'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/clients'
+    | '/forbidden'
+    | '/login'
+    | '/register'
+    | '/'
+    | '/content/assets'
+  id:
+    | '__root__'
+    | '/_app'
+    | '/_auth'
+    | '/_app/clients'
+    | '/_auth/_app'
+    | '/_auth/forbidden'
+    | '/_auth/login'
+    | '/_auth/register'
+    | '/_app/'
+    | '/_app/content/assets'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-	AppRoute: typeof AppRouteWithChildren
-	AuthRoute: typeof AuthRouteWithChildren
+  AppRoute: typeof AppRouteWithChildren
+  AuthRoute: typeof AuthRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
-	interface FileRoutesByPath {
-		'/_auth': {
-			id: '/_auth'
-			path: ''
-			fullPath: ''
-			preLoaderRoute: typeof AuthRouteImport
-			parentRoute: typeof rootRouteImport
-		}
-		'/_app': {
-			id: '/_app'
-			path: ''
-			fullPath: ''
-			preLoaderRoute: typeof AppRouteImport
-			parentRoute: typeof rootRouteImport
-		}
-		'/_app/': {
-			id: '/_app/'
-			path: '/'
-			fullPath: '/'
-			preLoaderRoute: typeof AppIndexRouteImport
-			parentRoute: typeof AppRoute
-		}
-		'/_auth/register': {
-			id: '/_auth/register'
-			path: '/register'
-			fullPath: '/register'
-			preLoaderRoute: typeof AuthRegisterRouteImport
-			parentRoute: typeof AuthRoute
-		}
-		'/_auth/login': {
-			id: '/_auth/login'
-			path: '/login'
-			fullPath: '/login'
-			preLoaderRoute: typeof AuthLoginRouteImport
-			parentRoute: typeof AuthRoute
-		}
-		'/_auth/forbidden': {
-			id: '/_auth/forbidden'
-			path: '/forbidden'
-			fullPath: '/forbidden'
-			preLoaderRoute: typeof AuthForbiddenRouteImport
-			parentRoute: typeof AuthRoute
-		}
-		'/_auth/_app': {
-			id: '/_auth/_app'
-			path: ''
-			fullPath: ''
-			preLoaderRoute: typeof AuthAppRouteImport
-			parentRoute: typeof AuthRoute
-		}
-		'/_app/clients': {
-			id: '/_app/clients'
-			path: '/clients'
-			fullPath: '/clients'
-			preLoaderRoute: typeof AppClientsRouteImport
-			parentRoute: typeof AppRoute
-		}
-		'/_app/content/assets': {
-			id: '/_app/content/assets'
-			path: '/content/assets'
-			fullPath: '/content/assets'
-			preLoaderRoute: typeof AppContentAssetsRouteImport
-			parentRoute: typeof AppRoute
-		}
-	}
+  interface FileRoutesByPath {
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app': {
+      id: '/_app'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_app/': {
+      id: '/_app/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_auth/register': {
+      id: '/_auth/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof AuthRegisterRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/login': {
+      id: '/_auth/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/forbidden': {
+      id: '/_auth/forbidden'
+      path: '/forbidden'
+      fullPath: '/forbidden'
+      preLoaderRoute: typeof AuthForbiddenRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/_app': {
+      id: '/_auth/_app'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthAppRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_app/clients': {
+      id: '/_app/clients'
+      path: '/clients'
+      fullPath: '/clients'
+      preLoaderRoute: typeof AppClientsRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/_app/content/assets': {
+      id: '/_app/content/assets'
+      path: '/content/assets'
+      fullPath: '/content/assets'
+      preLoaderRoute: typeof AppContentAssetsRouteImport
+      parentRoute: typeof AppRoute
+    }
+  }
 }
 
 interface AppRouteChildren {
-	AppClientsRoute: typeof AppClientsRoute
-	AppIndexRoute: typeof AppIndexRoute
-	AppContentAssetsRoute: typeof AppContentAssetsRoute
+  AppClientsRoute: typeof AppClientsRoute
+  AppIndexRoute: typeof AppIndexRoute
+  AppContentAssetsRoute: typeof AppContentAssetsRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
-	AppClientsRoute: AppClientsRoute,
-	AppIndexRoute: AppIndexRoute,
-	AppContentAssetsRoute: AppContentAssetsRoute
+  AppClientsRoute: AppClientsRoute,
+  AppIndexRoute: AppIndexRoute,
+  AppContentAssetsRoute: AppContentAssetsRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 
 interface AuthRouteChildren {
-	AuthAppRoute: typeof AuthAppRoute
-	AuthForbiddenRoute: typeof AuthForbiddenRoute
-	AuthLoginRoute: typeof AuthLoginRoute
-	AuthRegisterRoute: typeof AuthRegisterRoute
+  AuthAppRoute: typeof AuthAppRoute
+  AuthForbiddenRoute: typeof AuthForbiddenRoute
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthRegisterRoute: typeof AuthRegisterRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
-	AuthAppRoute: AuthAppRoute,
-	AuthForbiddenRoute: AuthForbiddenRoute,
-	AuthLoginRoute: AuthLoginRoute,
-	AuthRegisterRoute: AuthRegisterRoute
+  AuthAppRoute: AuthAppRoute,
+  AuthForbiddenRoute: AuthForbiddenRoute,
+  AuthLoginRoute: AuthLoginRoute,
+  AuthRegisterRoute: AuthRegisterRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
-	AppRoute: AppRouteWithChildren,
-	AuthRoute: AuthRouteWithChildren
+  AppRoute: AppRouteWithChildren,
+  AuthRoute: AuthRouteWithChildren,
 }
 export const routeTree = rootRouteImport
-	._addFileChildren(rootRouteChildren)
-	._addFileTypes<FileRouteTypes>()
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
