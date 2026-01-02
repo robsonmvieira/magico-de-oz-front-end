@@ -17,5 +17,3 @@ export function useRequireAuth() {
 		if (!isAuthenticated) redirect('/login')
 	}
 }
-
-
