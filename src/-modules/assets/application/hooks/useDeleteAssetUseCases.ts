@@ -1,5 +1,5 @@
-import { useDeps } from '@/-modules/shared/infra/di/deps'
 import { useMemo } from 'react'
+import { useDeps } from '@/-modules/shared/infra/di/deps'
 import { DeleteAssetsUseCase } from '../../domain/use-cases/delete-assets'
 import { AssetsRepository } from '../../infra/assets.repository'
 

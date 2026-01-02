@@ -1,1 +1,1 @@
-export * from './copy-generator';
+export * from './copy-generator'

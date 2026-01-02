@@ -1,5 +1,16 @@
 /** biome-ignore-all lint/suspicious/noDebugger: debugger statement for debugging purposes */
 
+import type { HTTPError } from 'ky'
+import {
+	Download,
+	ExternalLink,
+	FileText,
+	Loader2,
+	Star,
+	Trash
+} from 'lucide-react'
+import type { FormEvent } from 'react'
+import { useEffect, useState } from 'react'
 import { useCreateAssets } from '@/-modules/assets/application/mutations/use-create-assets'
 import { useAssetStore } from '@/-modules/assets/infra/store/asset.store'
 import { useToast } from '@/-modules/shared/application/hooks'
@@ -19,17 +30,6 @@ import {
 } from '@/components/ui/drawer'
 import { Input } from '@/components/ui/input'
 import { TabsContent } from '@/components/ui/tabs'
-import type { HTTPError } from 'ky'
-import {
-	Download,
-	ExternalLink,
-	FileText,
-	Loader2,
-	Star,
-	Trash
-} from 'lucide-react'
-import type { FormEvent } from 'react'
-import { useEffect, useState } from 'react'
 import { useDeleteAssets } from '../../../mutations/use-delete-assets'
 import { useUpdateFavoriteAssets } from '../../../mutations/use-update-favorite-assets'
 export function ContentScrapping() {
