@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import tailwindcss from '@tailwindcss/vite'
 import { tanstackRouter } from '@tanstack/router-plugin/vite'
 import react from '@vitejs/plugin-react'
@@ -42,5 +43,11 @@ export default defineConfig({
 	},
 	optimizeDeps: {
 		include: ['react', 'react-dom']
+	},
+	test: {
+		globals: true,
+		environment: 'jsdom',
+		setupFiles: './src/test/setup.ts',
+		css: true
 	}
 })
