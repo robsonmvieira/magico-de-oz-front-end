@@ -53,6 +53,11 @@ const AuthAppRoute = AuthAppRouteImport.update({
   id: '/_app',
   getParentRoute: () => AuthRoute,
 } as any)
+const AppTanosRoute = AppTanosRouteImport.update({
+  id: '/tanos',
+  path: '/tanos',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppClientsRoute = AppClientsRouteImport.update({
   id: '/clients',
   path: '/clients',
@@ -199,6 +204,13 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof AuthAppRouteImport
       parentRoute: typeof AuthRoute
+    }
+    '/_app/tanos': {
+      id: '/_app/tanos'
+      path: '/tanos'
+      fullPath: '/tanos'
+      preLoaderRoute: typeof AppTanosRouteImport
+      parentRoute: typeof AppRoute
     }
     '/_app/clients': {
       id: '/_app/clients'
