@@ -8,7 +8,7 @@ import {
 	// MessageSquare,
 	// PieChart,
 	TextSelect,
-	Users,
+	Users
 } from 'lucide-react'
 
 export const crmNavData = {
@@ -58,22 +58,22 @@ export const crmNavData = {
 					title: 'Import contacts',
 					url: '/audience/import'
 				},
-        {
-          title: 'Tags',
-          url: '/audience/tags'
-        },
-        {
-          title: 'Segments',
-          url: '/audience/segments'
-        },
-        {
-          title: 'Groups',
-          url: '/audience/groups'
-        },
-        {
-          title: 'Survey',
-          url: '/audience/survey'
-        }
+				{
+					title: 'Tags',
+					url: '/audience/tags'
+				},
+				{
+					title: 'Segments',
+					url: '/audience/segments'
+				},
+				{
+					title: 'Groups',
+					url: '/audience/groups'
+				},
+				{
+					title: 'Survey',
+					url: '/audience/survey'
+				}
 			]
 		},
 		{
