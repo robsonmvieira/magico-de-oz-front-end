@@ -1,9 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.3.10/schema.json",
-	"files": {
-		"ignoreUnknown": true,
-		"includes": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx", "**/*.json"]
-	},
+	"$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
 	"formatter": {
 		"enabled": true,
 		"formatWithErrors": false,
@@ -28,6 +24,26 @@
 	"json": {
 		"formatter": {
 			"trailingCommas": "none"
+		}
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"suspicious": {
+				"noExplicitAny": "off"
+			},
+			"complexity": {
+				"noUselessFragments": "off"
+			},
+			"a11y": {
+				"useButtonType": "warn",
+				"useFocusableInteractive": "warn",
+				"useSemanticElements": "warn"
+			},
+			"correctness": {
+				"useExhaustiveDependencies": "warn"
+			}
 		}
 	}
 }

@@ -3,8 +3,15 @@ dist
 build
 .next
 .history
-*.css
+src/index.css
+src/styles/**
 playwright-report
 coverage
 .git
 .husky
+**/routeTree.gen.ts
+**/*.gen.ts
+src/components/ui
+src/lib
+src/hooks
+components.json
