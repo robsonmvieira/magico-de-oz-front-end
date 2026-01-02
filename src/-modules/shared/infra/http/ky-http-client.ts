@@ -1,12 +1,13 @@
+import type { Response } from '../../domain/classes'
 import { http } from '../https/ky.http'
 import type { HttpClient, RequestOptions } from './http-client'
-import type { Response } from '../../domain/classes'
 
 export class KyHttpClient implements HttpClient {
 	private mapOptions(options?: RequestOptions) {
 		const mapped: any = {
 			headers: options?.headers,
-			json: options?.json
+			json: options?.json,
+			body: options?.body
 		}
 
 		if (options?.searchParams) {

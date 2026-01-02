@@ -1,9 +1,10 @@
-import type { Response } from "../../domain/classes"
+import type { Response } from '../../domain/classes'
 
 export type RequestOptions = {
 	searchParams?: Record<string, unknown>
 	headers?: Record<string, string>
 	json?: unknown
+	body?: FormData
 }
 
 export interface HttpClient {
@@ -13,5 +14,3 @@ export interface HttpClient {
 	patch<T>(url: string, options?: RequestOptions): Promise<Response<T>>
 	delete<T>(url: string, options?: RequestOptions): Promise<Response<T>>
 }
-
-

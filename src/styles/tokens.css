@@ -1,151 +1,372 @@
 :root {
-  /* Primary Color Tokens */
-  --color-primary-0: #f2fbf8;
-  --color-primary-50: #d5f2e8;
-  --color-primary-100: #abe4d1;
-  --color-primary-200: #79cfb6;
-  --color-primary-300: #4db498;
-  --color-primary-400: #33997f;
-  --color-primary-500: #277a67;
-  --color-primary-600: #236355;
-  --color-primary-700: #204f45;
-  --color-primary-800: #1e433b;
-  --color-primary-900: #0c2722;
+	/* Primary Color Tokens */
+	--color-primary-0: #f2fbf8;
+	--color-primary-50: #d5f2e8;
+	--color-primary-100: #abe4d1;
+	--color-primary-200: #79cfb6;
+	--color-primary-300: #4db498;
+	--color-primary-400: #33997f;
+	--color-primary-500: #277a67;
+	--color-primary-600: #236355;
+	--color-primary-700: #204f45;
+	--color-primary-800: #1e433b;
+	--color-primary-900: #0c2722;
 
-  /* Greyscale Color Tokens */
-  --color-greyscale-0: #ffffff;
-  --color-greyscale-5: #f9fafa;
-  --color-greyscale-25: #f3f4f4;
-  --color-greyscale-50: #e7e9e9;
-  --color-greyscale-100: #dcdede;
-  --color-greyscale-200: #d0d2d2;
-  --color-greyscale-300: #adb1b1;
-  --color-greyscale-400: #898f8f;
-  --color-greyscale-500: #666e6d;
-  --color-greyscale-600: #4f5857;
-  --color-greyscale-700: #2c3635;
-  --color-greyscale-800: #14201f;
+	/* Greyscale Color Tokens */
+	--color-greyscale-0: #ffffff;
+	--color-greyscale-5: #f9fafa;
+	--color-greyscale-25: #f3f4f4;
+	--color-greyscale-50: #e7e9e9;
+	--color-greyscale-100: #dcdede;
+	--color-greyscale-200: #d0d2d2;
+	--color-greyscale-300: #adb1b1;
+	--color-greyscale-400: #898f8f;
+	--color-greyscale-500: #666e6d;
+	--color-greyscale-600: #4f5857;
+	--color-greyscale-700: #2c3635;
+	--color-greyscale-800: #14201f;
 
-  /* Success Color Tokens */
-  --color-success-0: #d5f2e8;
-  --color-success-50: #abe4d1;
-  --color-success-100: #79cfb6;
-  --color-success-200: #4db498;
-  --color-success-300: #33997f;
-  --color-success-400: #277a67;
-  --color-success-500: #236355;
-  --color-success-600: #204f45;
-  --color-success-700: #1e433b;
-  --color-success-800: #0c2722;
+	/* Success Color Tokens */
+	--color-success-0: #edfaf0;
+	--color-success-25: #93f3aa;
+	--color-success-50: #28e757;
+	--color-success-100: #049228;
+	--color-success-200: #097224;
+	--color-success-300: #0a5d21;
 
-  /* Warning Color Tokens */
-  --color-warning-0: #fff7ea;
-  --color-warning-50: #fef3c7;
-  --color-warning-100: #fde68a;
-  --color-warning-200: #fcd34d;
-  --color-warning-300: #fbbf24;
-  --color-warning-400: #f59e0b;
-  --color-warning-500: #d97706;
-  --color-warning-600: #b45309;
-  --color-warning-700: #92400e;
-  --color-warning-800: #78350f;
+	/* Warning Color Tokens */
+	--color-warning-0: #fff7ea;
+	--color-warning-25: #f4dfb2;
+	--color-warning-50: #fde047;
+	--color-warning-100: #e99f00;
+	--color-warning-200: #d29f00;
+	--color-warning-300: #ca8a04;
 
-  /* Error Color Tokens */
-  --color-error-0: #fdf4f3;
-  --color-error-50: #fce7e5;
-  --color-error-100: #f9d1cc;
-  --color-error-200: #f2a5a0;
-  --color-error-300: #e8706b;
-  --color-error-400: #dc2626;
-  --color-error-500: #b91c1c;
-  --color-error-600: #991b1b;
-  --color-error-700: #7f1d1d;
-  --color-error-800: #651a1a;
+	/* Error Color Tokens */
+	--color-error-0: #fdf4f3;
+	--color-error-25: #fcd0cc;
+	--color-error-50: #ff8075;
+	--color-error-100: #d54033;
+	--color-error-200: #b22e23;
+	--color-error-300: #7b2821;
 
-  /* Info Color Tokens */
-  --color-info-0: #d9f1ff;
-  --color-info-50: #b3e3ff;
-  --color-info-100: #80d1ff;
-  --color-info-200: #4db8ff;
-  --color-info-300: #1a9fff;
-  --color-info-400: #0080e6;
-  --color-info-500: #0066b3;
-  --color-info-600: #004d80;
-  --color-info-700: #00334d;
-  --color-info-800: #001a1a;
+	/* Info Color Tokens */
+	--color-info-0: #d9f1ff;
+	--color-info-50: #b3e3ff;
+	--color-info-100: #80d1ff;
+	--color-info-200: #4db8ff;
+	--color-info-300: #1a9fff;
+	--color-info-400: #0080e6;
+	--color-info-500: #0066b3;
+	--color-info-600: #004d80;
+	--color-info-700: #00334d;
+	--color-info-800: #001a1a;
 
-  /* RGB Values for CSS Variables */
-  --color-primary-0-rgb: 242, 251, 248;
-  --color-primary-50-rgb: 213, 242, 232;
-  --color-primary-100-rgb: 171, 228, 209;
-  --color-primary-200-rgb: 121, 207, 182;
-  --color-primary-300-rgb: 77, 180, 152;
-  --color-primary-400-rgb: 51, 153, 127;
-  --color-primary-500-rgb: 39, 122, 103;
-  --color-primary-600-rgb: 35, 99, 85;
-  --color-primary-700-rgb: 32, 79, 69;
-  --color-primary-800-rgb: 30, 67, 59;
-  --color-primary-900-rgb: 12, 39, 34;
+	/* Additional Color - Lime */
+	--color-lime-0: #fafce9;
+	--color-lime-25: #f4f9ce;
+	--color-lime-50: #d5e86e;
+	--color-lime-100: #bad630;
+	--color-lime-200: #7e9818;
 
-  --color-greyscale-0-rgb: 255, 255, 255;
-  --color-greyscale-5-rgb: 249, 250, 250;
-  --color-greyscale-25-rgb: 243, 244, 244;
-  --color-greyscale-50-rgb: 231, 233, 233;
-  --color-greyscale-100-rgb: 220, 222, 222;
-  --color-greyscale-200-rgb: 208, 210, 210;
-  --color-greyscale-300-rgb: 173, 177, 177;
-  --color-greyscale-400-rgb: 137, 143, 143;
-  --color-greyscale-500-rgb: 102, 110, 109;
-  --color-greyscale-600-rgb: 79, 88, 87;
-  --color-greyscale-700-rgb: 44, 54, 53;
-  --color-greyscale-800-rgb: 20, 32, 31;
+	/* Additional Color - Purple */
+	--color-purple-0: #f5f6ff;
+	--color-purple-25: #e6ecf9;
+	--color-purple-50: #b5c4ec;
+	--color-purple-100: #7680d4;
+	--color-purple-200: #6467c7;
 
-  /* Semantic Color Tokens */
-  --color-primary: var(--color-primary-500);
-  --color-primary-light: var(--color-primary-400);
-  --color-primary-dark: var(--color-primary-600);
-  --color-primary-accent: var(--color-primary-200);
-  --color-primary-muted: var(--color-primary-100);
-  --color-primary-subtle: var(--color-primary-50);
-  --color-primary-background: var(--color-primary-0);
+	/* Additional Color - Blue Sky */
+	--color-bluesky-0: #f5f9fc;
+	--color-bluesky-25: #d9f1ff;
+	--color-bluesky-50: #9fdcff;
+	--color-bluesky-100: #55aee2;
+	--color-bluesky-200: #1b9fec;
 
-  /* Greyscale Semantic Tokens */
-  --color-greyscale: var(--color-greyscale-500);
-  --color-greyscale-light: var(--color-greyscale-400);
-  --color-greyscale-dark: var(--color-greyscale-600);
-  --color-greyscale-muted: var(--color-greyscale-100);
-  --color-greyscale-subtle: var(--color-greyscale-50);
-  --color-greyscale-background: var(--color-greyscale-0);
+	/* Additional Color - Orange */
+	--color-orange-0: #fff2ea;
+	--color-orange-25: #ffe2cf;
+	--color-orange-50: #fad3bc;
+	--color-orange-100: #f9a069;
+	--color-orange-200: #f6833c;
 
-  /* Success Semantic Tokens */
-  --color-success: var(--color-success-500);
-  --color-success-light: var(--color-success-400);
-  --color-success-dark: var(--color-success-600);
-  --color-success-muted: var(--color-success-100);
-  --color-success-subtle: var(--color-success-50);
-  --color-success-background: var(--color-success-0);
+	/* Additional Color - Fresh Green */
+	--color-freshgreen-0: #f3fbee;
+	--color-freshgreen-25: #e3fed4;
+	--color-freshgreen-50: #c4f5a8;
+	--color-freshgreen-100: #81d650;
+	--color-freshgreen-200: #42b501;
 
-  /* Warning Semantic Tokens */
-  --color-warning: var(--color-warning-500);
-  --color-warning-light: var(--color-warning-400);
-  --color-warning-dark: var(--color-warning-600);
-  --color-warning-muted: var(--color-warning-100);
-  --color-warning-subtle: var(--color-warning-50);
-  --color-warning-background: var(--color-warning-0);
+	/* Overlay */
+	--color-overlay-popup: #14201f;
 
-  /* Error Semantic Tokens */
-  --color-error: var(--color-error-500);
-  --color-error-light: var(--color-error-400);
-  --color-error-dark: var(--color-error-600);
-  --color-error-muted: var(--color-error-100);
-  --color-error-subtle: var(--color-error-50);
-  --color-error-background: var(--color-error-0);
+	/* RGB Values for CSS Variables */
+	--color-primary-0-rgb: 242, 251, 248;
+	--color-primary-50-rgb: 213, 242, 232;
+	--color-primary-100-rgb: 171, 228, 209;
+	--color-primary-200-rgb: 121, 207, 182;
+	--color-primary-300-rgb: 77, 180, 152;
+	--color-primary-400-rgb: 51, 153, 127;
+	--color-primary-500-rgb: 39, 122, 103;
+	--color-primary-600-rgb: 35, 99, 85;
+	--color-primary-700-rgb: 32, 79, 69;
+	--color-primary-800-rgb: 30, 67, 59;
+	--color-primary-900-rgb: 12, 39, 34;
 
-  /* Info Semantic Tokens */
-  --color-info: var(--color-info-500);
-  --color-info-light: var(--color-info-400);
-  --color-info-dark: var(--color-info-600);
-  --color-info-muted: var(--color-info-100);
-  --color-info-subtle: var(--color-info-50);
-  --color-info-background: var(--color-info-0);
+	--color-greyscale-0-rgb: 255, 255, 255;
+	--color-greyscale-5-rgb: 249, 250, 250;
+	--color-greyscale-25-rgb: 243, 244, 244;
+	--color-greyscale-50-rgb: 231, 233, 233;
+	--color-greyscale-100-rgb: 220, 222, 222;
+	--color-greyscale-200-rgb: 208, 210, 210;
+	--color-greyscale-300-rgb: 173, 177, 177;
+	--color-greyscale-400-rgb: 137, 143, 143;
+	--color-greyscale-500-rgb: 102, 110, 109;
+	--color-greyscale-600-rgb: 79, 88, 87;
+	--color-greyscale-700-rgb: 44, 54, 53;
+	--color-greyscale-800-rgb: 20, 32, 31;
+
+	/* Semantic Color Tokens */
+	--color-primary: var(--color-primary-500);
+	--color-primary-light: var(--color-primary-400);
+	--color-primary-dark: var(--color-primary-600);
+	--color-primary-accent: var(--color-primary-200);
+	--color-primary-muted: var(--color-primary-100);
+	--color-primary-subtle: var(--color-primary-50);
+	--color-primary-background: var(--color-primary-0);
+
+	/* Greyscale Semantic Tokens */
+	--color-greyscale: var(--color-greyscale-500);
+	--color-greyscale-light: var(--color-greyscale-400);
+	--color-greyscale-dark: var(--color-greyscale-600);
+	--color-greyscale-muted: var(--color-greyscale-100);
+	--color-greyscale-subtle: var(--color-greyscale-50);
+	--color-greyscale-background: var(--color-greyscale-0);
+
+	/* Success Semantic Tokens */
+	--color-success: var(--color-success-200);
+	--color-success-light: var(--color-success-100);
+	--color-success-dark: var(--color-success-300);
+	--color-success-muted: var(--color-success-50);
+	--color-success-subtle: var(--color-success-25);
+	--color-success-background: var(--color-success-0);
+
+	/* Warning Semantic Tokens */
+	--color-warning: var(--color-warning-200);
+	--color-warning-light: var(--color-warning-100);
+	--color-warning-dark: var(--color-warning-300);
+	--color-warning-muted: var(--color-warning-50);
+	--color-warning-subtle: var(--color-warning-25);
+	--color-warning-background: var(--color-warning-0);
+
+	/* Error Semantic Tokens */
+	--color-error: var(--color-error-200);
+	--color-error-light: var(--color-error-100);
+	--color-error-dark: var(--color-error-300);
+	--color-error-muted: var(--color-error-50);
+	--color-error-subtle: var(--color-error-25);
+	--color-error-background: var(--color-error-0);
+
+	/* Info Semantic Tokens */
+	--color-info: var(--color-info-500);
+	--color-info-light: var(--color-info-400);
+	--color-info-dark: var(--color-info-600);
+	--color-info-muted: var(--color-info-100);
+	--color-info-subtle: var(--color-info-50);
+	--color-info-background: var(--color-info-0);
+
+	/* Typography Tokens - Headings Semibold */
+	--font-heading-h3-semibold-size: 2.25rem; /* 36px */
+	--font-heading-h3-semibold-weight: 600;
+	--font-heading-h3-semibold-line-height: 1.2;
+
+	--font-heading-h4-semibold-size: 2rem; /* 32px */
+	--font-heading-h4-semibold-weight: 600;
+	--font-heading-h4-semibold-line-height: 1.2;
+
+	--font-heading-h5-semibold-size: 1.5rem; /* 24px */
+	--font-heading-h5-semibold-weight: 600;
+	--font-heading-h5-semibold-line-height: 1.3;
+
+	--font-heading-h6-semibold-size: 1.25rem; /* 20px */
+	--font-heading-h6-semibold-weight: 600;
+	--font-heading-h6-semibold-line-height: 1.4;
+
+	--font-heading-h7-semibold-size: 1.125rem; /* 18px */
+	--font-heading-h7-semibold-weight: 600;
+	--font-heading-h7-semibold-line-height: 1.4;
+
+	/* Typography Tokens - Headings Medium */
+	--font-heading-h3-medium-size: 2.25rem; /* 36px */
+	--font-heading-h3-medium-weight: 500;
+	--font-heading-h3-medium-line-height: 1.2;
+
+	--font-heading-h4-medium-size: 2rem; /* 32px */
+	--font-heading-h4-medium-weight: 500;
+	--font-heading-h4-medium-line-height: 1.2;
+
+	--font-heading-h5-medium-size: 1.5rem; /* 24px */
+	--font-heading-h5-medium-weight: 500;
+	--font-heading-h5-medium-line-height: 1.3;
+
+	--font-heading-h6-medium-size: 1.25rem; /* 20px */
+	--font-heading-h6-medium-weight: 500;
+	--font-heading-h6-medium-line-height: 1.4;
+
+	--font-heading-h7-medium-size: 1.125rem; /* 18px */
+	--font-heading-h7-medium-weight: 500;
+	--font-heading-h7-medium-line-height: 1.4;
+
+	/* Typography Tokens - Body Large */
+	--font-body-large-bold-size: 1.125rem; /* 18px */
+	--font-body-large-bold-weight: 700;
+	--font-body-large-bold-line-height: 1.5;
+
+	--font-body-large-semibold-size: 1.125rem; /* 18px */
+	--font-body-large-semibold-weight: 600;
+	--font-body-large-semibold-line-height: 1.5;
+
+	--font-body-large-medium-size: 1.125rem; /* 18px */
+	--font-body-large-medium-weight: 500;
+	--font-body-large-medium-line-height: 1.5;
+
+	--font-body-large-regular-size: 1.125rem; /* 18px */
+	--font-body-large-regular-weight: 400;
+	--font-body-large-regular-line-height: 1.5;
+
+	/* Typography Tokens - Body Medium */
+	--font-body-medium-bold-size: 1rem; /* 16px */
+	--font-body-medium-bold-weight: 700;
+	--font-body-medium-bold-line-height: 1.5;
+
+	--font-body-medium-semibold-size: 1rem; /* 16px */
+	--font-body-medium-semibold-weight: 600;
+	--font-body-medium-semibold-line-height: 1.5;
+
+	--font-body-medium-medium-size: 1rem; /* 16px */
+	--font-body-medium-medium-weight: 500;
+	--font-body-medium-medium-line-height: 1.5;
+
+	--font-body-medium-regular-size: 1rem; /* 16px */
+	--font-body-medium-regular-weight: 400;
+	--font-body-medium-regular-line-height: 1.5;
+
+	/* Typography Tokens - Body Small */
+	--font-body-small-bold-size: 0.875rem; /* 14px */
+	--font-body-small-bold-weight: 700;
+	--font-body-small-bold-line-height: 1.5;
+
+	--font-body-small-semibold-size: 0.875rem; /* 14px */
+	--font-body-small-semibold-weight: 600;
+	--font-body-small-semibold-line-height: 1.5;
+
+	--font-body-small-medium-size: 0.875rem; /* 14px */
+	--font-body-small-medium-weight: 500;
+	--font-body-small-medium-line-height: 1.5;
+
+	--font-body-small-regular-size: 0.875rem; /* 14px */
+	--font-body-small-regular-weight: 400;
+	--font-body-small-regular-line-height: 1.5;
+
+	/* Typography Tokens - Body XSmall */
+	--font-body-xsmall-bold-size: 0.75rem; /* 12px */
+	--font-body-xsmall-bold-weight: 700;
+	--font-body-xsmall-bold-line-height: 1.5;
+
+	--font-body-xsmall-semibold-size: 0.75rem; /* 12px */
+	--font-body-xsmall-semibold-weight: 600;
+	--font-body-xsmall-semibold-line-height: 1.5;
+
+	--font-body-xsmall-medium-size: 0.75rem; /* 12px */
+	--font-body-xsmall-medium-weight: 500;
+	--font-body-xsmall-medium-line-height: 1.5;
+
+	--font-body-xsmall-regular-size: 0.75rem; /* 12px */
+	--font-body-xsmall-regular-weight: 400;
+	--font-body-xsmall-regular-line-height: 1.5;
+
+	/* Typography Tokens - Label Large */
+	--font-label-large-bold-size: 1.125rem; /* 18px */
+	--font-label-large-bold-weight: 700;
+	--font-label-large-bold-line-height: 1.5;
+
+	--font-label-large-semibold-size: 1.125rem; /* 18px */
+	--font-label-large-semibold-weight: 600;
+	--font-label-large-semibold-line-height: 1.5;
+
+	--font-label-large-medium-size: 1.125rem; /* 18px */
+	--font-label-large-medium-weight: 500;
+	--font-label-large-medium-line-height: 1.5;
+
+	--font-label-large-regular-size: 1.125rem; /* 18px */
+	--font-label-large-regular-weight: 400;
+	--font-label-large-regular-line-height: 1.5;
+
+	/* Typography Tokens - Label Medium */
+	--font-label-medium-bold-size: 1rem; /* 16px */
+	--font-label-medium-bold-weight: 700;
+	--font-label-medium-bold-line-height: 1.5;
+
+	--font-label-medium-semibold-size: 1rem; /* 16px */
+	--font-label-medium-semibold-weight: 600;
+	--font-label-medium-semibold-line-height: 1.5;
+
+	--font-label-medium-medium-size: 1rem; /* 16px */
+	--font-label-medium-medium-weight: 500;
+	--font-label-medium-medium-line-height: 1.5;
+
+	--font-label-medium-regular-size: 1rem; /* 16px */
+	--font-label-medium-regular-weight: 400;
+	--font-label-medium-regular-line-height: 1.5;
+
+	/* Typography Tokens - Label Small */
+	--font-label-small-bold-size: 0.875rem; /* 14px */
+	--font-label-small-bold-weight: 700;
+	--font-label-small-bold-line-height: 1.5;
+
+	--font-label-small-semibold-size: 0.875rem; /* 14px */
+	--font-label-small-semibold-weight: 600;
+	--font-label-small-semibold-line-height: 1.5;
+
+	--font-label-small-medium-size: 0.875rem; /* 14px */
+	--font-label-small-medium-weight: 500;
+	--font-label-small-medium-line-height: 1.5;
+
+	--font-label-small-regular-size: 0.875rem; /* 14px */
+	--font-label-small-regular-weight: 400;
+	--font-label-small-regular-line-height: 1.5;
+
+	/* Typography Tokens - Label XSmall */
+	--font-label-xsmall-bold-size: 0.75rem; /* 12px */
+	--font-label-xsmall-bold-weight: 700;
+	--font-label-xsmall-bold-line-height: 1.5;
+
+	--font-label-xsmall-semibold-size: 0.75rem; /* 12px */
+	--font-label-xsmall-semibold-weight: 600;
+	--font-label-xsmall-semibold-line-height: 1.5;
+
+	--font-label-xsmall-medium-size: 0.75rem; /* 12px */
+	--font-label-xsmall-medium-weight: 500;
+	--font-label-xsmall-medium-line-height: 1.5;
+
+	--font-label-xsmall-regular-size: 0.75rem; /* 12px */
+	--font-label-xsmall-regular-weight: 400;
+	--font-label-xsmall-regular-line-height: 1.5;
+
+	/* Typography Tokens - Label XXSmall */
+	--font-label-xxsmall-bold-size: 0.6875rem; /* 11px */
+	--font-label-xxsmall-bold-weight: 700;
+	--font-label-xxsmall-bold-line-height: 1.5;
+
+	--font-label-xxsmall-semibold-size: 0.6875rem; /* 11px */
+	--font-label-xxsmall-semibold-weight: 600;
+	--font-label-xxsmall-semibold-line-height: 1.5;
+
+	--font-label-xxsmall-medium-size: 0.6875rem; /* 11px */
+	--font-label-xxsmall-medium-weight: 500;
+	--font-label-xxsmall-medium-line-height: 1.5;
+
+	--font-label-xxsmall-regular-size: 0.6875rem; /* 11px */
+	--font-label-xxsmall-regular-weight: 400;
+	--font-label-xxsmall-regular-line-height: 1.5;
 }
