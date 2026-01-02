@@ -1,8 +1,6 @@
-import { useDeps } from '@/-modules/shared/infra/di/deps'
 import { useMemo } from 'react'
-import {
-	UpdateFavoriteUseCase
-} from '../../domain/use-cases/update-favorite'
+import { useDeps } from '@/-modules/shared/infra/di/deps'
+import { UpdateFavoriteUseCase } from '../../domain/use-cases/update-favorite'
 import { AssetsRepository } from '../../infra/assets.repository'
 
 export function useUpdateFavoriteAssetUseCases() {

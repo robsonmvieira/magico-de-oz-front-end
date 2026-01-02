@@ -1,5 +1,5 @@
-import { queryKeys } from '@/-modules/shared/infra/query/query-keys'
 import { useQuery } from '@tanstack/react-query'
+import { queryKeys } from '@/-modules/shared/infra/query/query-keys'
 import { useAssetsUseCases } from '../hooks/useAssetsUseCases'
 
 export function useListAssets(params?: { page?: number }) {
