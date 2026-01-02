@@ -3,6 +3,7 @@ import { cleanup } from '@testing-library/react'
 import { afterEach, vi } from 'vitest'
 
 // Polyfill React.act for React 19 compatibility
+// @ts-expect-error - IS_REACT_ACT_ENVIRONMENT is a global flag for testing-library
 globalThis.IS_REACT_ACT_ENVIRONMENT = true
 
 // Mock React.act since React 19 moved it
