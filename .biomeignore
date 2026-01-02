@@ -3,8 +3,6 @@ dist
 build
 .next
 .history
-src/index.css
-src/styles/**
 playwright-report
 coverage
 .git
@@ -14,4 +12,6 @@ coverage
 src/components/ui
 src/lib
 src/hooks
+src/index.css
+src/styles
 components.json
