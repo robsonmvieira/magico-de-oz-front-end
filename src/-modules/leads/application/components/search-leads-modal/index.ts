@@ -1,0 +1,5 @@
+export { AdvancedTab } from './advanced-tab'
+export { LocationTab } from './location-tab'
+export { NameCnpjTab } from './name-cnpj-tab'
+export { SearchLeadsModal } from './search-leads-modal'
+export { SectorRegionSizeTab } from './sector-region-size-tab'

@@ -72,7 +72,7 @@ export function TablePagination({
 						<Button
 							variant='outline'
 							size='icon'
-							className='h-8 w-8'
+							className={`h-8 w-8 ${canGoPrevious ? 'cursor-pointer' : 'cursor-not-allowed'}`}
 							onClick={() => onPageChange(currentPage - 1)}
 							disabled={!canGoPrevious}
 						>
@@ -81,7 +81,7 @@ export function TablePagination({
 						<Button
 							variant='outline'
 							size='icon'
-							className='h-8 w-8'
+							className={`h-8 w-8 ${canGoNext ? 'cursor-pointer' : 'cursor-not-allowed'}`}
 							onClick={() => onPageChange(currentPage + 1)}
 							disabled={!canGoNext}
 						>
