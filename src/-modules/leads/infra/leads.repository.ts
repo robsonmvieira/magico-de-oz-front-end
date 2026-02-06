@@ -1,15 +1,19 @@
 import type { Response } from '@/-modules/shared/domain/classes'
 import type { HttpClient } from '@/-modules/shared/infra/http/http-client'
+import type { PaginationInput } from '@/-modules/shared/domain/types/pagination'
 import type {
 	AutocompleteInput,
 	AutocompletePlace
 } from '../domain/types/autocomplete'
+import type { Lead } from '../domain/types/lead'
 import type {
 	CreateLeadsFromCriteriaData,
 	CreateLeadsFromCriteriaInput,
 	SearchLeadsData,
 	SearchLeadsInput
 } from '../domain/types/search-leads'
+
+export type ListLeadsInput = PaginationInput
 
 export class LeadsRepository {
 	constructor(private readonly http: HttpClient) {}
@@ -62,5 +66,31 @@ export class LeadsRepository {
 				json: { leads: input.leads }
 			}
 		)
+	}
+
+	async list(input?: ListLeadsInput): Promise<Response<Lead[]>> {
+		const searchParams: Record<string, string> = {}
+
+		if (input?.page) {
+			searchParams.page = String(input.page)
+		}
+
+		if (input?.limit) {
+			searchParams.limit = String(input.limit)
+		}
+
+		if (input?.sortBy) {
+			searchParams.sortBy = input.sortBy
+		}
+
+		if (input?.sortOrder) {
+			searchParams.sortOrder = input.sortOrder
+		}
+
+		if (input?.search) {
+			searchParams.search = input.search
+		}
+
+		return this.http.get<Lead[]>('crm/leads', { searchParams })
 	}
 }

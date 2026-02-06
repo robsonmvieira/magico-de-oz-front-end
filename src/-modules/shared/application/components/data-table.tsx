@@ -18,6 +18,15 @@ import {
 	TableRow
 } from '@/components/ui/table'
 
+export interface ServerPaginationProps {
+	currentPage: number
+	totalPages: number
+	pageSize: number
+	totalItems: number
+	onPageChange: (page: number) => void
+	onPageSizeChange: (pageSize: number) => void
+}
+
 export interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[]
 	data: TData[]
@@ -29,6 +38,7 @@ export interface DataTableProps<TData, TValue> {
 	searchColumn?: string
 	searchValue?: string
 	defaultPageSize?: number
+	serverPagination?: ServerPaginationProps
 }
 
 export function DataTable<TData, TValue>({
@@ -38,10 +48,13 @@ export function DataTable<TData, TValue>({
 	filterableColumns = [],
 	searchColumn,
 	searchValue,
-	defaultPageSize = 10
+	defaultPageSize = 10,
+	serverPagination
 }: DataTableProps<TData, TValue>) {
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 	const [pageSize, setPageSize] = useState(defaultPageSize)
+
+	const isServerPagination = !!serverPagination
 
 	// Atualiza filtros quando props mudam
 	const activeFilters = [
@@ -55,13 +68,14 @@ export function DataTable<TData, TValue>({
 		data,
 		columns,
 		getCoreRowModel: getCoreRowModel(),
-		getPaginationRowModel: getPaginationRowModel(),
+		getPaginationRowModel: isServerPagination ? undefined : getPaginationRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
+		manualPagination: isServerPagination,
 		state: {
 			columnFilters: activeFilters.length > 0 ? activeFilters : columnFilters,
 			pagination: {
 				pageIndex: 0,
-				pageSize
+				pageSize: isServerPagination ? serverPagination.pageSize : pageSize
 			}
 		},
 		onColumnFiltersChange: setColumnFilters,
@@ -128,12 +142,30 @@ export function DataTable<TData, TValue>({
 				</Table>
 			</div>
 			<TablePagination
-				currentPage={table.getState().pagination.pageIndex + 1}
-				totalPages={table.getPageCount()}
-				pageSize={table.getState().pagination.pageSize}
-				totalItems={data.length}
-				onPageChange={page => table.setPageIndex(page - 1)}
-				onPageSizeChange={size => table.setPageSize(size)}
+				currentPage={
+					isServerPagination
+						? serverPagination.currentPage
+						: table.getState().pagination.pageIndex + 1
+				}
+				totalPages={
+					isServerPagination ? serverPagination.totalPages : table.getPageCount()
+				}
+				pageSize={
+					isServerPagination
+						? serverPagination.pageSize
+						: table.getState().pagination.pageSize
+				}
+				totalItems={isServerPagination ? serverPagination.totalItems : data.length}
+				onPageChange={page =>
+					isServerPagination
+						? serverPagination.onPageChange(page)
+						: table.setPageIndex(page - 1)
+				}
+				onPageSizeChange={size =>
+					isServerPagination
+						? serverPagination.onPageSizeChange(size)
+						: table.setPageSize(size)
+				}
 			/>
 		</div>
 	)
