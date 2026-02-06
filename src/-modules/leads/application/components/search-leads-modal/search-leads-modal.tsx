@@ -90,7 +90,7 @@ export function SearchLeadsModal({
 		startLoading('Adicionando leads...')
 		try {
 			const response = await createLeadsFromCriteria.execute({ leads })
-			if (response.data && !response.has_error) {
+			if (response.data && !response.hasError) {
 				const { createdCount, skippedCount } = response.data
 				toast.success('Leads adicionados com sucesso!', {
 					description: buildSuccessDescription(createdCount, skippedCount)
@@ -99,7 +99,7 @@ export function SearchLeadsModal({
 				onClose()
 			} else {
 				toast.error('Erro ao adicionar leads', {
-					description: response.error_message || 'Tente novamente mais tarde'
+					description: response.errorMessage || 'Tente novamente mais tarde'
 				})
 			}
 		} catch (error) {

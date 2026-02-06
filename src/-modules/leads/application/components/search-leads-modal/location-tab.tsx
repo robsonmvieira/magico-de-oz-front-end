@@ -62,7 +62,7 @@ export function LocationTab({
 			try {
 				const response = await autocompletePlaces.execute({ query: input })
 
-				if (response.data && !response.has_error) {
+				if (response.data && !response.hasError) {
 					setPredictions(response.data)
 					setShowDropdown(true)
 				} else {

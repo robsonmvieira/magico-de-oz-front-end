@@ -1,28 +1,135 @@
-import { useState } from 'react'
-import { LeadPath, SelectPopover } from '@/-modules/leads/application/components'
-import { leadsColumns } from '@/-modules/leads/application/components/leads-columns'
-import { fakeLeadsData } from '@/-modules/leads/application/data/fake-leads-data'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import {
-	OrderByData,
-	selectCampaignData,
-	StatusCampaignData
-} from '@/-modules/leads/application/components/fake-data/campaign'
+	LeadPath,
+	SelectPopover
+} from '@/-modules/leads/application/components'
+import { leadsColumns } from '@/-modules/leads/application/components/leads-columns'
+import { useLeadsUseCases } from '@/-modules/leads/application/hooks'
+import type { Lead } from '@/-modules/leads/domain/types/lead'
 import { DataTable } from '@/-modules/shared/application/components/data-table'
+import { useLoading } from '@/-modules/shared/infra/loading/loading-context'
 import { Input } from '@/components/ui/input'
 import { createFileRoute } from '@tanstack/react-router'
 import { Search } from 'lucide-react'
 
+interface PaginationState {
+	page: number
+	limit: number
+	totalItems: number
+	totalPages: number
+}
+
+const temperatureFilterData = [
+	{ label: 'Todas', value: 'all' },
+	{ label: 'Frio', value: 'cold' },
+	{ label: 'Morno', value: 'warm' },
+	{ label: 'Quente', value: 'hot' }
+]
+
+const stageFilterData = [
+	{ label: 'Todas', value: 'all' },
+	{ label: 'Novo', value: 'new' },
+	{ label: 'Contactado', value: 'contacted' },
+	{ label: 'Qualificado', value: 'qualified' },
+	{ label: 'Proposta', value: 'proposal' },
+	{ label: 'Negociação', value: 'negotiation' },
+	{ label: 'Ganho', value: 'won' },
+	{ label: 'Perdido', value: 'lost' }
+]
+
+const sourceFilterData = [
+	{ label: 'Todas', value: 'all' },
+	{ label: 'Google Maps', value: 'google_maps' },
+	{ label: 'Manual', value: 'manual' },
+	{ label: 'Importação', value: 'import' },
+	{ label: 'API', value: 'api' },
+	{ label: 'Receita Federal', value: 'receita_federal' }
+]
+
+const DEFAULT_PAGE_SIZE = 10
+
 function AllLeads() {
-	const [campaignFilter, setCampaignFilter] = useState('')
-	const [statusFilter, setStatusFilter] = useState('')
+	const [temperatureFilter, setTemperatureFilter] = useState('')
+	const [stageFilter, setStageFilter] = useState('')
+	const [sourceFilter, setSourceFilter] = useState('')
 	const [searchValue, setSearchValue] = useState('')
+	const [searchQuery, setSearchQuery] = useState('')
+	const [leads, setLeads] = useState<Lead[]>([])
+	const [pagination, setPagination] = useState<PaginationState>({
+		page: 1,
+		limit: DEFAULT_PAGE_SIZE,
+		totalItems: 0,
+		totalPages: 0
+	})
+
+	const debounceTimeout = useRef<NodeJS.Timeout | null>(null)
+
+	const { listLeads } = useLeadsUseCases()
+	const { startLoading, stopLoading } = useLoading()
+
+	const fetchLeads = useCallback(
+		async (page: number, limit: number, search?: string) => {
+			startLoading('Carregando leads...')
+			try {
+				const response = await listLeads.execute({
+					page,
+					limit,
+					search: search || undefined,
+					sortBy: 'createdAt',
+					sortOrder: 'desc'
+				})
+				if (response.data && !response.hasError) {
+					setLeads(response.data)
+					setPagination({
+						page: response.page ?? page,
+						limit: response.limit ?? limit,
+						totalItems: response.totalItems ?? 0,
+						totalPages: response.totalPages ?? 0
+					})
+				}
+			} catch (error) {
+				console.error('Erro ao carregar leads:', error)
+			} finally {
+				stopLoading()
+			}
+		},
+		[listLeads, startLoading, stopLoading]
+	)
+
+	useEffect(() => {
+		fetchLeads(pagination.page, pagination.limit, searchQuery)
+	}, [pagination.page, pagination.limit, searchQuery])
+
+	const handleSearchChange = (value: string) => {
+		setSearchValue(value)
+
+		if (debounceTimeout.current) {
+			clearTimeout(debounceTimeout.current)
+		}
+
+		debounceTimeout.current = setTimeout(() => {
+			setSearchQuery(value)
+			setPagination(prev => ({ ...prev, page: 1 }))
+		}, 500)
+	}
+
+	const handlePageChange = (page: number) => {
+		setPagination(prev => ({ ...prev, page }))
+	}
+
+	const handlePageSizeChange = (limit: number) => {
+		setPagination(prev => ({ ...prev, limit, page: 1 }))
+	}
 
 	const filters = [
-		...(campaignFilter && campaignFilter !== 'all'
-			? [{ id: 'campaign', value: campaignFilter }]
+		...(temperatureFilter && temperatureFilter !== 'all'
+			? [{ id: 'temperature', value: temperatureFilter }]
 			: []),
-		...(statusFilter && statusFilter !== 'all'
-			? [{ id: 'status', value: statusFilter }]
+		...(stageFilter && stageFilter !== 'all'
+			? [{ id: 'stage', value: stageFilter }]
+			: []),
+		...(sourceFilter && sourceFilter !== 'all'
+			? [{ id: 'source', value: sourceFilter }]
 			: [])
 	]
 
@@ -32,34 +139,44 @@ function AllLeads() {
 			<div className='flex justify-between items-center'>
 				<div className='flex items-center space-x-4'>
 					<SelectPopover
-						label='Campanha'
-						options={selectCampaignData}
-						onValueChange={setCampaignFilter}
+						label='Temperatura'
+						options={temperatureFilterData}
+						onValueChange={setTemperatureFilter}
 					/>
 					<SelectPopover
-						label='Status'
-						options={StatusCampaignData}
-						onValueChange={setStatusFilter}
+						label='Etapa'
+						options={stageFilterData}
+						onValueChange={setStageFilter}
 					/>
-					<SelectPopover label='Ordernar por' options={OrderByData} />
+					<SelectPopover
+						label='Origem'
+						options={sourceFilterData}
+						onValueChange={setSourceFilter}
+					/>
 				</div>
 				<div className='flex items-center shadow-sm rounded-md px-4 py-2'>
 					<Search className='size-4 text-greyscale-500' />
 					<Input
 						className='shadow-none border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0'
-						placeholder='Buscar lead, campanha, status...'
+						placeholder='Buscar lead...'
 						value={searchValue}
-						onChange={e => setSearchValue(e.target.value)}
+						onChange={e => handleSearchChange(e.target.value)}
 					/>
 				</div>
 			</div>
 			<DataTable
 				columns={leadsColumns}
-				data={fakeLeadsData}
+				data={leads}
 				filterableColumns={filters}
-				searchColumn='name'
-				searchValue={searchValue}
 				emptyMessage='Nenhum lead encontrado.'
+				serverPagination={{
+					currentPage: pagination.page,
+					totalPages: pagination.totalPages,
+					pageSize: pagination.limit,
+					totalItems: pagination.totalItems,
+					onPageChange: handlePageChange,
+					onPageSizeChange: handlePageSizeChange
+				}}
 			/>
 		</div>
 	)

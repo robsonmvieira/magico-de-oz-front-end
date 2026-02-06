@@ -1,21 +1,47 @@
 import type { ColumnDef } from '@tanstack/react-table'
-import { MoreHorizontal } from 'lucide-react'
+import { ExternalLink, MoreHorizontal } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import type { Lead } from '@/-modules/leads/domain/types/lead'
 
-const statusColors = {
-	active: 'bg-success-0 text-success-100 border-success-25',
-	inactive: 'bg-greyscale-50 text-greyscale-500 border-greyscale-200',
-	pending: 'bg-warning-0 text-warning-100 border-warning-25',
-	engaged: 'bg-bluesky-0 text-bluesky-200 border-bluesky-25'
+const temperatureColors = {
+	cold: 'bg-bluesky-0 text-bluesky-200 border-bluesky-25',
+	warm: 'bg-warning-0 text-warning-100 border-warning-25',
+	hot: 'bg-error-0 text-error-100 border-error-25'
 }
 
-const statusLabels = {
-	active: 'Ativo',
-	inactive: 'Inativo',
-	pending: 'Pendente',
-	engaged: 'Engajado'
+const temperatureLabels = {
+	cold: 'Frio',
+	warm: 'Morno',
+	hot: 'Quente'
+}
+
+const stageColors = {
+	new: 'bg-greyscale-50 text-greyscale-500 border-greyscale-200',
+	contacted: 'bg-bluesky-0 text-bluesky-200 border-bluesky-25',
+	qualified: 'bg-success-0 text-success-100 border-success-25',
+	proposal: 'bg-warning-0 text-warning-100 border-warning-25',
+	negotiation: 'bg-primary-0 text-primary-100 border-primary-25',
+	won: 'bg-success-0 text-success-100 border-success-25',
+	lost: 'bg-error-0 text-error-100 border-error-25'
+}
+
+const stageLabels = {
+	new: 'Novo',
+	contacted: 'Contactado',
+	qualified: 'Qualificado',
+	proposal: 'Proposta',
+	negotiation: 'Negociação',
+	won: 'Ganho',
+	lost: 'Perdido'
+}
+
+const sourceLabels = {
+	google_maps: 'Google Maps',
+	manual: 'Manual',
+	import: 'Importação',
+	api: 'API',
+	receita_federal: 'Receita Federal'
 }
 
 export const leadsColumns: ColumnDef<Lead>[] = [
@@ -42,51 +68,26 @@ export const leadsColumns: ColumnDef<Lead>[] = [
 		enableHiding: false
 	},
 	{
-		accessorKey: 'name',
-		header: 'Nome/Empresa',
+		accessorKey: 'tradeName',
+		header: 'Empresa',
 		cell: ({ row }) => (
 			<div className='flex flex-col'>
 				<span className='body-small-semibold text-greyscale-900'>
-					{row.original.name}
+					{row.original.tradeName}
 				</span>
-				{row.original.company && (
-					<span className='body-xsmall-regular text-greyscale-500'>
-						{row.original.company}
-					</span>
-				)}
+				<span className='body-xsmall-regular text-greyscale-500'>
+					{row.original.address?.city}, {row.original.address?.state}
+				</span>
 			</div>
 		),
 		filterFn: (row, id, value) => {
-			const name = row.getValue(id) as string
-			const company = row.original.company || ''
+			const tradeName = row.getValue(id) as string
+			const companyName = row.original.companyName || ''
 			const searchValue = value.toLowerCase()
 			return (
-				name.toLowerCase().includes(searchValue) ||
-				company.toLowerCase().includes(searchValue)
+				tradeName.toLowerCase().includes(searchValue) ||
+				companyName.toLowerCase().includes(searchValue)
 			)
-		}
-	},
-	{
-		accessorKey: 'position',
-		header: 'Cargo',
-		cell: ({ row }) => (
-			<span className='body-small-regular text-greyscale-700'>
-				{row.getValue('position') || '-'}
-			</span>
-		)
-	},
-	{
-		accessorKey: 'email',
-		header: 'Email',
-		cell: ({ row }) => (
-			<span className='body-small-regular text-greyscale-700'>
-				{row.getValue('email')}
-			</span>
-		),
-		filterFn: (row, id, value) => {
-			return String(row.getValue(id))
-				.toLowerCase()
-				.includes(String(value).toLowerCase())
 		}
 	},
 	{
@@ -94,33 +95,84 @@ export const leadsColumns: ColumnDef<Lead>[] = [
 		header: 'Telefone',
 		cell: ({ row }) => (
 			<span className='body-small-regular text-greyscale-700'>
-				{row.getValue('phone')}
+				{row.getValue('phone') || '-'}
 			</span>
 		)
 	},
 	{
-		accessorKey: 'campaign',
-		header: 'Campanha',
-		cell: ({ row }) => (
-			<span className='body-small-regular text-greyscale-700'>
-				{row.getValue('campaign') || '-'}
-			</span>
-		),
+		accessorKey: 'website',
+		header: 'Website',
+		cell: ({ row }) => {
+			const website = row.getValue('website') as string | undefined
+			if (!website) return <span className='text-greyscale-400'>-</span>
+			return (
+				<a
+					href={website}
+					target='_blank'
+					rel='noopener noreferrer'
+					className='body-small-regular text-primary-100 hover:underline flex items-center gap-1'
+				>
+					Visitar <ExternalLink className='size-3' />
+				</a>
+			)
+		}
+	},
+	{
+		accessorKey: 'source',
+		header: 'Origem',
+		cell: ({ row }) => {
+			const source = row.getValue('source') as Lead['source']
+			return (
+				<span className='body-small-regular text-greyscale-700'>
+					{sourceLabels[source] || source}
+				</span>
+			)
+		},
 		filterFn: (row, id, value) => {
 			if (!value || value === 'all') return true
 			return row.getValue(id) === value
 		}
 	},
 	{
-		accessorKey: 'status',
-		header: 'Status',
+		accessorKey: 'score.icpFit',
+		header: 'Score ICP',
 		cell: ({ row }) => {
-			const status = row.getValue('status') as Lead['status']
+			const score = row.original.score?.icpFit ?? 0
+			return (
+				<span className='body-small-semibold text-greyscale-700'>
+					{score}%
+				</span>
+			)
+		}
+	},
+	{
+		accessorKey: 'temperature',
+		header: 'Temperatura',
+		cell: ({ row }) => {
+			const temperature = row.getValue('temperature') as Lead['temperature']
 			return (
 				<span
-					className={`inline-flex items-center px-2.5 py-1 rounded-full border label-xsmall-medium ${statusColors[status]}`}
+					className={`inline-flex items-center px-2.5 py-1 rounded-full border label-xsmall-medium ${temperatureColors[temperature]}`}
 				>
-					{statusLabels[status]}
+					{temperatureLabels[temperature]}
+				</span>
+			)
+		},
+		filterFn: (row, id, value) => {
+			if (!value || value === 'all') return true
+			return row.getValue(id) === value
+		}
+	},
+	{
+		accessorKey: 'stage',
+		header: 'Etapa',
+		cell: ({ row }) => {
+			const stage = row.getValue('stage') as Lead['stage']
+			return (
+				<span
+					className={`inline-flex items-center px-2.5 py-1 rounded-full border label-xsmall-medium ${stageColors[stage]}`}
+				>
+					{stageLabels[stage]}
 				</span>
 			)
 		},
