@@ -19,7 +19,7 @@ export type UpdateFavoriteInput = { is_favorite: boolean }
 
 export class AssetsRepository extends BaseRepository {
 	constructor(http: HttpClient) {
-		super(http, 'content-scrapped')
+		super(http, 'agents/content-scrapped')
 	}
 	async updateFavorite(id: string, is_favorite: boolean) {
 		return this.update<Asset>(id, { is_favorite })
