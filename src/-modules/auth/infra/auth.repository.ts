@@ -27,24 +27,24 @@ export class AuthRepository extends BaseRepository {
 	}): Promise<Response<void>> {
 		// stub - implementar login
 		return {
-			created_at: new Date().toISOString(),
-			has_error: false,
+			createdAt: new Date().toISOString(),
+			hasError: false,
 			error: null,
-			error_message: null,
+			errorMessage: null,
 			data: undefined,
-			success: true
+			ok: true
 		}
 	}
 
 	async logout(): Promise<Response<void>> {
 		// stub - implementar logout
 		return {
-			created_at: new Date().toISOString(),
-			has_error: false,
+			createdAt: new Date().toISOString(),
+			hasError: false,
 			error: null,
-			error_message: null,
+			errorMessage: null,
 			data: undefined,
-			success: true
+			ok: true
 		}
 	}
 }
