@@ -4,7 +4,9 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 
 import { AuthProvider } from '@/-modules/auth/infra/AuthProvider'
+import { GlobalLoading } from '@/-modules/shared/application/components/global-loading'
 import { AppDepsProvider } from '@/-modules/shared/infra/di/deps'
+import { LoadingProvider } from '@/-modules/shared/infra/loading/loading-context'
 import { QueryProvider } from '@/-modules/shared/infra/query/QueryProvider'
 import { routeTree } from './routeTree.gen'
 
@@ -23,9 +25,12 @@ createRoot(document.getElementById('root')!).render(
 	<StrictMode>
 		<QueryProvider>
 			<AppDepsProvider>
-				<AuthProvider>
-					<RouterProvider router={router} />
-				</AuthProvider>
+				<LoadingProvider>
+					<AuthProvider>
+						<RouterProvider router={router} />
+					</AuthProvider>
+					<GlobalLoading />
+				</LoadingProvider>
 			</AppDepsProvider>
 		</QueryProvider>
 	</StrictMode>

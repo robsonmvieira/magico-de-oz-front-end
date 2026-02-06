@@ -8,6 +8,8 @@ import type {
 } from '@/-modules/leads/domain/schemas/search-leads.schema'
 import { useLeadsUseCases } from '@/-modules/leads/application/hooks/useLeadsUseCases'
 import type { SearchLeadResult } from '@/-modules/leads/domain/types/search-leads'
+import { useToast } from '@/-modules/shared/application/hooks/useToast'
+import { useLoading } from '@/-modules/shared/infra/loading/loading-context'
 import {
 	Dialog,
 	DialogContent,
@@ -36,7 +38,10 @@ export function SearchLeadsModal({
 	const [searchResults, setSearchResults] = useState<SearchLeadResult[]>([])
 	const [totalResults, setTotalResults] = useState(0)
 	const [isSearching, setIsSearching] = useState(false)
-	const { searchLeadsByCriteria } = useLeadsUseCases()
+	const { searchLeadsByCriteria, createLeadsFromCriteria } = useLeadsUseCases()
+	const [isAddingLeads, setIsAddingLeads] = useState(false)
+	const toast = useToast()
+	const { startLoading, stopLoading } = useLoading()
 
 	const handleNameCnpjSearch = (data: NameCnpjFormData) => {
 		console.log('Busca por Nome/CNPJ:', data)
@@ -69,11 +74,43 @@ export function SearchLeadsModal({
 		onClose()
 	}
 
-	const handleAddLeads = (leads: SearchLeadResult[]) => {
-		console.log('Leads selecionados para adicionar:', leads)
-		// TODO: Implementar chamada para adicionar leads
-		setIsResultsModalOpen(false)
-		onClose()
+	const buildSuccessDescription = (created: number, skipped: number) => {
+		const parts: string[] = []
+		if (created > 0) {
+			parts.push(`${created} lead${created > 1 ? 's' : ''} criado${created > 1 ? 's' : ''}`)
+		}
+		if (skipped > 0) {
+			parts.push(`${skipped} ignorado${skipped > 1 ? 's' : ''}`)
+		}
+		return parts.join(', ')
+	}
+
+	const handleAddLeads = async (leads: SearchLeadResult[]) => {
+		setIsAddingLeads(true)
+		startLoading('Adicionando leads...')
+		try {
+			const response = await createLeadsFromCriteria.execute({ leads })
+			if (response.data && !response.has_error) {
+				const { createdCount, skippedCount } = response.data
+				toast.success('Leads adicionados com sucesso!', {
+					description: buildSuccessDescription(createdCount, skippedCount)
+				})
+				setIsResultsModalOpen(false)
+				onClose()
+			} else {
+				toast.error('Erro ao adicionar leads', {
+					description: response.error_message || 'Tente novamente mais tarde'
+				})
+			}
+		} catch (error) {
+			console.error('Erro ao adicionar leads:', error)
+			toast.error('Erro ao adicionar leads', {
+				description: 'Ocorreu um erro inesperado. Tente novamente.'
+			})
+		} finally {
+			setIsAddingLeads(false)
+			stopLoading()
+		}
 	}
 
 	const handleResultsModalClose = () => {
@@ -137,6 +174,7 @@ export function SearchLeadsModal({
 				results={searchResults}
 				total={totalResults}
 				onAddLeads={handleAddLeads}
+				isLoading={isAddingLeads}
 			/>
 		</>
 	)
