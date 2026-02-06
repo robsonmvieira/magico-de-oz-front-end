@@ -5,6 +5,8 @@ import type {
 	AutocompletePlace
 } from '../domain/types/autocomplete'
 import type {
+	CreateLeadsFromCriteriaData,
+	CreateLeadsFromCriteriaInput,
 	SearchLeadsData,
 	SearchLeadsInput
 } from '../domain/types/search-leads'
@@ -49,5 +51,16 @@ export class LeadsRepository {
 		return this.http.post<SearchLeadsData>('crm/leads/search-by-criteria', {
 			json: { advancedFilter }
 		})
+	}
+
+	async createFromCriteria(
+		input: CreateLeadsFromCriteriaInput
+	): Promise<Response<CreateLeadsFromCriteriaData>> {
+		return this.http.post<CreateLeadsFromCriteriaData>(
+			'crm/leads/create-from-criteria',
+			{
+				json: { leads: input.leads }
+			}
+		)
 	}
 }

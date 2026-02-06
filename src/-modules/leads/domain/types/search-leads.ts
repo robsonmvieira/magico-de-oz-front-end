@@ -57,3 +57,12 @@ export interface SearchLeadsResponse {
 	ok: boolean
 	statusCode: number
 }
+
+export interface CreateLeadsFromCriteriaInput {
+	leads: SearchLeadResult[]
+}
+
+export interface CreateLeadsFromCriteriaData {
+	createdCount: number
+	skippedCount: number
+}
