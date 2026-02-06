@@ -6,7 +6,7 @@ import type { User } from '../domain/types'
 
 export class AuthRepository extends BaseRepository {
 	constructor(http: HttpClient) {
-		super(http, 'auth')
+		super(http, 'crm/auth')
 	}
 
 	async getCurrentUser(): Promise<User | null> {

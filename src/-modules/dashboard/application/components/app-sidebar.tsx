@@ -39,7 +39,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 									</div>
 									<div className='flex flex-col gap-0.5 leading-none'>
 										<span className='font-bold  text-primary-700'>
-											RobRobot CRM
+											LeadLens
 										</span>
 									</div>
 								</a>
@@ -49,7 +49,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 				</SidebarMenu>
 				<div className='px-2'>
 					<Button className='cursor-pointer h-9 w-full'>
-						<Plus /> New Campaign
+						<Plus /> Nova Campanha
 					</Button>
 				</div>
 				<SearchForm />

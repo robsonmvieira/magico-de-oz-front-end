@@ -58,6 +58,11 @@ const AppTanosRoute = AppTanosRouteImport.update({
   path: '/tanos',
   getParentRoute: () => AppRoute,
 } as any)
+const AppLeadsRoute = AppLeadsRouteImport.update({
+  id: '/leads',
+  path: '/leads',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppClientsRoute = AppClientsRouteImport.update({
   id: '/clients',
   path: '/clients',
@@ -68,85 +73,75 @@ const AppContentAssetsRoute = AppContentAssetsRouteImport.update({
   path: '/content/assets',
   getParentRoute: () => AppRoute,
 } as any)
-const AppTanosRoute = AppTanosRouteImport.update({
-  id: '/tanos',
-  path: '/tanos',
-  getParentRoute: () => AppRoute,
-} as any)
-const AppLeadsRoute = AppLeadsRouteImport.update({
-  id: '/leads',
-  path: '/leads',
-  getParentRoute: () => AppRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/clients': typeof AppClientsRoute
+  '/leads': typeof AppLeadsRoute
+  '/tanos': typeof AppTanosRoute
   '/forbidden': typeof AuthForbiddenRoute
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
   '/': typeof AppIndexRoute
   '/content/assets': typeof AppContentAssetsRoute
-  '/tanos': typeof AppTanosRoute
-  '/leads': typeof AppLeadsRoute
 }
 export interface FileRoutesByTo {
   '/clients': typeof AppClientsRoute
+  '/leads': typeof AppLeadsRoute
+  '/tanos': typeof AppTanosRoute
   '/forbidden': typeof AuthForbiddenRoute
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
   '/': typeof AppIndexRoute
   '/content/assets': typeof AppContentAssetsRoute
-  '/tanos': typeof AppTanosRoute
-  '/leads': typeof AppLeadsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_app': typeof AppRouteWithChildren
   '/_auth': typeof AuthRouteWithChildren
   '/_app/clients': typeof AppClientsRoute
+  '/_app/leads': typeof AppLeadsRoute
+  '/_app/tanos': typeof AppTanosRoute
   '/_auth/_app': typeof AuthAppRoute
   '/_auth/forbidden': typeof AuthForbiddenRoute
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/register': typeof AuthRegisterRoute
   '/_app/': typeof AppIndexRoute
   '/_app/content/assets': typeof AppContentAssetsRoute
-  '/_app/tanos': typeof AppTanosRoute
-  '/_app/leads': typeof AppLeadsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/clients'
+    | '/leads'
+    | '/tanos'
     | '/forbidden'
     | '/login'
     | '/register'
     | '/'
     | '/content/assets'
-    | '/tanos'
-    | '/leads'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/clients'
+    | '/leads'
+    | '/tanos'
     | '/forbidden'
     | '/login'
     | '/register'
     | '/'
     | '/content/assets'
-    | '/tanos'
-    | '/leads'
   id:
     | '__root__'
     | '/_app'
     | '/_auth'
     | '/_app/clients'
+    | '/_app/leads'
+    | '/_app/tanos'
     | '/_auth/_app'
     | '/_auth/forbidden'
     | '/_auth/login'
     | '/_auth/register'
     | '/_app/'
     | '/_app/content/assets'
-    | '/_app/tanos'
-    | '/_app/leads'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -212,6 +207,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppTanosRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/leads': {
+      id: '/_app/leads'
+      path: '/leads'
+      fullPath: '/leads'
+      preLoaderRoute: typeof AppLeadsRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/_app/clients': {
       id: '/_app/clients'
       path: '/clients'
@@ -226,37 +228,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppContentAssetsRouteImport
       parentRoute: typeof AppRoute
     }
-    '/_app/tanos': {
-      id: '/_app/tanos'
-      path: '/tanos'
-      fullPath: '/tanos'
-      preLoaderRoute: typeof AppTanosRouteImport
-      parentRoute: typeof AppRoute
-    }
-    '/_app/leads': {
-      id: '/_app/leads'
-      path: '/leads'
-      fullPath: '/leads'
-      preLoaderRoute: typeof AppLeadsRouteImport
-      parentRoute: typeof AppRoute
-    }
   }
 }
 
 interface AppRouteChildren {
   AppClientsRoute: typeof AppClientsRoute
+  AppLeadsRoute: typeof AppLeadsRoute
+  AppTanosRoute: typeof AppTanosRoute
   AppIndexRoute: typeof AppIndexRoute
   AppContentAssetsRoute: typeof AppContentAssetsRoute
-  AppTanosRoute: typeof AppTanosRoute
-  AppLeadsRoute: typeof AppLeadsRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
   AppClientsRoute: AppClientsRoute,
+  AppLeadsRoute: AppLeadsRoute,
+  AppTanosRoute: AppTanosRoute,
   AppIndexRoute: AppIndexRoute,
   AppContentAssetsRoute: AppContentAssetsRoute,
-  AppTanosRoute: AppTanosRoute,
-  AppLeadsRoute: AppLeadsRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)

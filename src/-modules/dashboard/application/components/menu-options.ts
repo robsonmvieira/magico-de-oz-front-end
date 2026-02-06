@@ -41,14 +41,14 @@ export const crmNavData = {
 			]
 		},
 		{
-			title: 'Audience',
-			url: '/audience',
+			title: 'Leads',
+			url: '/leads',
 			icon: Users,
 			isActive: false,
 			items: [
 				{
-					title: 'All contacts',
-					url: '/audience/all'
+					title: 'Leads',
+					url: '/leads'
 				},
 				{
 					title: 'New contact',
