@@ -9,7 +9,6 @@ import type {
 import { useLeadsUseCases } from '@/-modules/leads/application/hooks/useLeadsUseCases'
 import type { SearchLeadResult } from '@/-modules/leads/domain/types/search-leads'
 import { useToast } from '@/-modules/shared/application/hooks/useToast'
-import { useLoading } from '@/-modules/shared/infra/loading/loading-context'
 import {
 	Dialog,
 	DialogContent,
@@ -41,22 +40,60 @@ export function SearchLeadsModal({
 	const { searchLeadsByCriteria, createLeadsFromCriteria } = useLeadsUseCases()
 	const [isAddingLeads, setIsAddingLeads] = useState(false)
 	const toast = useToast()
-	const { startLoading, stopLoading } = useLoading()
 
-	const handleNameCnpjSearch = (data: NameCnpjFormData) => {
-		console.log('Busca por Nome/CNPJ:', data)
-		onClose()
+	const handleNameCnpjSearch = async (data: NameCnpjFormData) => {
+		setIsSearching(true)
+		try {
+			const response = await searchLeadsByCriteria.execute({
+				companyIdentifier: {
+					companyName: data.companyName,
+					cnpj: data.cnpj
+				}
+			})
+			if (response.data) {
+				setSearchResults(response.data.results)
+				setTotalResults(response.data.total)
+				setIsResultsModalOpen(true)
+			}
+		} catch (error) {
+			console.error('Erro na busca:', error)
+		} finally {
+			setIsSearching(false)
+		}
 	}
 
-	const handleSectorRegionSizeSearch = (data: SectorRegionSizeFormData) => {
-		console.log('Busca por Setor/Região/Porte:', data)
-		onClose()
+	const handleSectorRegionSizeSearch = async (data: SectorRegionSizeFormData) => {
+		setIsSearching(true)
+		try {
+			const response = await searchLeadsByCriteria.execute({
+				sectorFilter: {
+					sector: data.sector,
+					region: data.region,
+					size: data.size
+				}
+			})
+			if (response.data) {
+				setSearchResults(response.data.results)
+				setTotalResults(response.data.total)
+				setIsResultsModalOpen(true)
+			}
+		} catch (error) {
+			console.error('Erro na busca:', error)
+		} finally {
+			setIsSearching(false)
+		}
 	}
 
 	const handleAdvancedSearch = async (data: AdvancedSearchFormData) => {
 		setIsSearching(true)
 		try {
-			const response = await searchLeadsByCriteria.execute(data)
+			const response = await searchLeadsByCriteria.execute({
+				advancedFilter: {
+					term: data.term,
+					foundationYear: data.foundationYear,
+					keywords: data.keywords
+				}
+			})
 			if (response.data) {
 				setSearchResults(response.data.results)
 				setTotalResults(response.data.total)
@@ -87,7 +124,6 @@ export function SearchLeadsModal({
 
 	const handleAddLeads = async (leads: SearchLeadResult[]) => {
 		setIsAddingLeads(true)
-		startLoading('Adicionando leads...')
 		try {
 			const response = await createLeadsFromCriteria.execute({ leads })
 			if (response.data && !response.hasError) {
@@ -109,7 +145,6 @@ export function SearchLeadsModal({
 			})
 		} finally {
 			setIsAddingLeads(false)
-			stopLoading()
 		}
 	}
 
@@ -136,34 +171,35 @@ export function SearchLeadsModal({
 						className='w-full mt-4'
 					>
 						<TabsList className='w-full grid grid-cols-4'>
-							<TabsTrigger value='name-cnpj'>
+							<TabsTrigger value='name-cnpj' disabled={isSearching} className='cursor-pointer'>
 								<Store className='size-4' />
 								Nome ou CNPJ
 							</TabsTrigger>
-							<TabsTrigger value='sector-region-size'>
+							<TabsTrigger value='sector-region-size' disabled={isSearching} className='cursor-pointer'>
 								<ChartPie className='size-4' />
 								Setor, Região e Porte
 							</TabsTrigger>
-							<TabsTrigger value='location'>
+							<TabsTrigger value='location' disabled={isSearching} className='cursor-pointer'>
 								<MapPin className='size-4' />
 								Estabelecimentos
 							</TabsTrigger>
-							<TabsTrigger value='advanced' disabled={isSearching}>
+							<TabsTrigger value='advanced' disabled={isSearching} className='cursor-pointer'>
 								<SlidersHorizontal className='size-4' />
 								Avançado
 							</TabsTrigger>
 						</TabsList>
 
-						<NameCnpjTab onSearch={handleNameCnpjSearch} onCancel={onClose} />
+						<NameCnpjTab onSearch={handleNameCnpjSearch} onCancel={onClose} isLoading={isSearching} />
 
 						<SectorRegionSizeTab
 							onSearch={handleSectorRegionSizeSearch}
 							onCancel={onClose}
+							isLoading={isSearching}
 						/>
 
 						<LocationTab onSearch={handleLocationSearch} onCancel={onClose} />
 
-						<AdvancedTab onSearch={handleAdvancedSearch} onCancel={onClose} />
+						<AdvancedTab onSearch={handleAdvancedSearch} onCancel={onClose} isLoading={isSearching} />
 					</Tabs>
 				</DialogContent>
 			</Dialog>

@@ -39,6 +39,7 @@ export interface DataTableProps<TData, TValue> {
 	searchValue?: string
 	defaultPageSize?: number
 	serverPagination?: ServerPaginationProps
+	onRowClick?: (row: TData) => void
 }
 
 export function DataTable<TData, TValue>({
@@ -49,7 +50,8 @@ export function DataTable<TData, TValue>({
 	searchColumn,
 	searchValue,
 	defaultPageSize = 10,
-	serverPagination
+	serverPagination,
+	onRowClick
 }: DataTableProps<TData, TValue>) {
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
 	const [pageSize, setPageSize] = useState(defaultPageSize)
@@ -116,7 +118,8 @@ export function DataTable<TData, TValue>({
 								<TableRow
 									key={row.id}
 									data-state={row.getIsSelected() && 'selected'}
-									className='border-greyscale-100'
+									className={`border-greyscale-100 ${onRowClick ? 'cursor-pointer hover:bg-greyscale-25' : ''}`}
+									onClick={() => onRowClick?.(row.original)}
 								>
 									{row.getVisibleCells().map(cell => (
 										<TableCell key={cell.id} className='py-4'>
@@ -141,32 +144,36 @@ export function DataTable<TData, TValue>({
 					</TableBody>
 				</Table>
 			</div>
-			<TablePagination
-				currentPage={
-					isServerPagination
-						? serverPagination.currentPage
-						: table.getState().pagination.pageIndex + 1
-				}
-				totalPages={
-					isServerPagination ? serverPagination.totalPages : table.getPageCount()
-				}
-				pageSize={
-					isServerPagination
-						? serverPagination.pageSize
-						: table.getState().pagination.pageSize
-				}
-				totalItems={isServerPagination ? serverPagination.totalItems : data.length}
-				onPageChange={page =>
-					isServerPagination
-						? serverPagination.onPageChange(page)
-						: table.setPageIndex(page - 1)
-				}
-				onPageSizeChange={size =>
-					isServerPagination
-						? serverPagination.onPageSizeChange(size)
-						: table.setPageSize(size)
-				}
-			/>
+			{(isServerPagination
+				? serverPagination.totalItems > serverPagination.pageSize
+				: data.length > pageSize) && (
+				<TablePagination
+					currentPage={
+						isServerPagination
+							? serverPagination.currentPage
+							: table.getState().pagination.pageIndex + 1
+					}
+					totalPages={
+						isServerPagination ? serverPagination.totalPages : table.getPageCount()
+					}
+					pageSize={
+						isServerPagination
+							? serverPagination.pageSize
+							: table.getState().pagination.pageSize
+					}
+					totalItems={isServerPagination ? serverPagination.totalItems : data.length}
+					onPageChange={page =>
+						isServerPagination
+							? serverPagination.onPageChange(page)
+							: table.setPageIndex(page - 1)
+					}
+					onPageSizeChange={size =>
+						isServerPagination
+							? serverPagination.onPageSizeChange(size)
+							: table.setPageSize(size)
+					}
+				/>
+			)}
 		</div>
 	)
 }

@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Search } from 'lucide-react'
+import { Loader2, Search } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { NumericFormat } from 'react-number-format'
 import {
@@ -28,11 +28,13 @@ const numericInputClassName = cn(
 interface AdvancedTabProps {
 	readonly onSearch: (data: AdvancedSearchFormData) => void
 	readonly onCancel: () => void
+	readonly isLoading?: boolean
 }
 
 export function AdvancedTab({
 	onSearch,
-	onCancel
+	onCancel,
+	isLoading = false
 }: Readonly<AdvancedTabProps>) {
 	const form = useForm<AdvancedSearchFormData>({
 		resolver: zodResolver(advancedSearchSchema),
@@ -108,12 +110,16 @@ export function AdvancedTab({
 					/>
 
 					<div className='flex justify-end gap-3 pt-4'>
-						<Button type='button' variant='outline' onClick={onCancel} className='cursor-pointer'>
+						<Button type='button' variant='outline' onClick={onCancel} className='cursor-pointer' disabled={isLoading}>
 							Cancelar
 						</Button>
-						<Button type='submit' className='cursor-pointer'>
-							<Search className='size-4' />
-							Buscar
+						<Button type='submit' className='cursor-pointer' disabled={isLoading}>
+							{isLoading ? (
+								<Loader2 className='size-4 animate-spin' />
+							) : (
+								<Search className='size-4' />
+							)}
+							{isLoading ? 'Buscando...' : 'Buscar'}
 						</Button>
 					</div>
 				</form>

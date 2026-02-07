@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Search } from 'lucide-react'
+import { Loader2, Search } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { IMaskInput } from 'react-imask'
 import {
@@ -28,11 +28,13 @@ const inputClassName = cn(
 interface NameCnpjTabProps {
 	readonly onSearch: (data: NameCnpjFormData) => void
 	readonly onCancel: () => void
+	readonly isLoading?: boolean
 }
 
 export function NameCnpjTab({
 	onSearch,
-	onCancel
+	onCancel,
+	isLoading = false
 }: Readonly<NameCnpjTabProps>) {
 	const form = useForm<NameCnpjFormData>({
 		resolver: zodResolver(nameCnpjSchema),
@@ -87,12 +89,16 @@ export function NameCnpjTab({
 					/>
 
 					<div className='flex justify-end gap-3 pt-4'>
-						<Button type='button' variant='outline' onClick={onCancel}>
+						<Button type='button' variant='outline' onClick={onCancel} disabled={isLoading} className='cursor-pointer'>
 							Cancelar
 						</Button>
-						<Button type='submit'>
-							<Search className='size-4' />
-							Buscar
+						<Button type='submit' disabled={isLoading} className='cursor-pointer'>
+							{isLoading ? (
+								<Loader2 className='size-4 animate-spin' />
+							) : (
+								<Search className='size-4' />
+							)}
+							{isLoading ? 'Buscando...' : 'Buscar'}
 						</Button>
 					</div>
 				</form>
