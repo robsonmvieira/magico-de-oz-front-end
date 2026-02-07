@@ -1,7 +1,26 @@
-export interface SearchLeadsInput {
+export interface CompanyIdentifier {
+	companyName?: string
+	cnpj?: string
+}
+
+export interface SectorFilter {
+	sector?: string
+	region?: string
+	states?: string[]
+	size?: string
+}
+
+export interface AdvancedFilter {
 	term?: string
 	foundationYear?: string
 	keywords?: string
+}
+
+export interface SearchLeadsInput {
+	companyIdentifier?: CompanyIdentifier
+	sectorFilter?: SectorFilter
+	advancedFilter?: AdvancedFilter
+	limit?: number
 }
 
 export interface LeadAddress {

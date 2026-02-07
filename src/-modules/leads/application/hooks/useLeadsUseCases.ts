@@ -3,6 +3,7 @@ import { useDeps } from '@/-modules/shared/infra/di/deps'
 import {
 	AutocompletePlacesUseCase,
 	CreateLeadsFromCriteriaUseCase,
+	DeleteLeadUseCase,
 	ListLeadsUseCase,
 	SearchLeadsByCriteriaUseCase
 } from '../../domain/use-cases'
@@ -17,6 +18,7 @@ export function useLeadsUseCases() {
 		return {
 			autocompletePlaces: new AutocompletePlacesUseCase(repository),
 			createLeadsFromCriteria: new CreateLeadsFromCriteriaUseCase(repository),
+			deleteLead: new DeleteLeadUseCase(repository),
 			listLeads: new ListLeadsUseCase(repository),
 			searchLeadsByCriteria: new SearchLeadsByCriteriaUseCase(repository)
 		}

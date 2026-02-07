@@ -1,4 +1,5 @@
 export { AutocompletePlacesUseCase } from './autocomplete-places'
 export { CreateLeadsFromCriteriaUseCase } from './create-leads-from-criteria'
+export { DeleteLeadUseCase } from './delete-lead'
 export { ListLeadsUseCase } from './list-leads'
 export { SearchLeadsByCriteriaUseCase } from './search-leads-by-criteria'

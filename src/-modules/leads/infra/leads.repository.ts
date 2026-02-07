@@ -38,22 +38,62 @@ export class LeadsRepository {
 	async searchByCriteria(
 		input: SearchLeadsInput
 	): Promise<Response<SearchLeadsData>> {
-		const advancedFilter: Record<string, string> = {}
+		const payload: Record<string, unknown> = {}
 
-		if (input.term) {
-			advancedFilter.term = input.term
+		if (input.companyIdentifier) {
+			const companyIdentifier: Record<string, string> = {}
+			if (input.companyIdentifier.companyName) {
+				companyIdentifier.companyName = input.companyIdentifier.companyName
+			}
+			if (input.companyIdentifier.cnpj) {
+				companyIdentifier.cnpj = input.companyIdentifier.cnpj.replaceAll(/\D/g, '')
+			}
+			if (Object.keys(companyIdentifier).length > 0) {
+				payload.companyIdentifier = companyIdentifier
+			}
 		}
 
-		if (input.foundationYear) {
-			advancedFilter.foundationYear = input.foundationYear
+		if (input.sectorFilter) {
+			const sectorFilter: Record<string, unknown> = {}
+			if (input.sectorFilter.sector) {
+				sectorFilter.sector = input.sectorFilter.sector
+			}
+			if (input.sectorFilter.region) {
+				sectorFilter.region = input.sectorFilter.region
+			}
+			if (input.sectorFilter.states?.length) {
+				sectorFilter.states = input.sectorFilter.states
+			}
+			if (input.sectorFilter.size) {
+				sectorFilter.size = input.sectorFilter.size
+			}
+			if (Object.keys(sectorFilter).length > 0) {
+				payload.sectorFilter = sectorFilter
+			}
 		}
 
-		if (input.keywords) {
-			advancedFilter.keywords = input.keywords
+		if (input.advancedFilter) {
+			const advancedFilter: Record<string, string> = {}
+			if (input.advancedFilter.term) {
+				advancedFilter.term = input.advancedFilter.term
+			}
+			if (input.advancedFilter.foundationYear) {
+				advancedFilter.foundationYear = input.advancedFilter.foundationYear
+			}
+			if (input.advancedFilter.keywords) {
+				advancedFilter.keywords = input.advancedFilter.keywords
+			}
+			if (Object.keys(advancedFilter).length > 0) {
+				payload.advancedFilter = advancedFilter
+			}
+		}
+
+		if (input.limit) {
+			payload.limit = input.limit
 		}
 
 		return this.http.post<SearchLeadsData>('crm/leads/search-by-criteria', {
-			json: { advancedFilter }
+			json: payload
 		})
 	}
 
@@ -92,5 +132,9 @@ export class LeadsRepository {
 		}
 
 		return this.http.get<Lead[]>('crm/leads', { searchParams })
+	}
+
+	async delete(id: string): Promise<Response<void>> {
+		return this.http.delete<void>(`crm/leads/${id}`)
 	}
 }

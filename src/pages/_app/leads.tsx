@@ -1,16 +1,17 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { createFileRoute } from '@tanstack/react-router'
+import { Search } from 'lucide-react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
+	LeadDetailsModal,
 	LeadPath,
 	SelectPopover
 } from '@/-modules/leads/application/components'
-import { leadsColumns } from '@/-modules/leads/application/components/leads-columns'
+import { createLeadsColumns } from '@/-modules/leads/application/components/leads-columns'
 import { useLeadsUseCases } from '@/-modules/leads/application/hooks'
 import type { Lead } from '@/-modules/leads/domain/types/lead'
 import { DataTable } from '@/-modules/shared/application/components/data-table'
-import { useLoading } from '@/-modules/shared/infra/loading/loading-context'
+import { useToast } from '@/-modules/shared/application/hooks'
 import { Input } from '@/components/ui/input'
-import { createFileRoute } from '@tanstack/react-router'
-import { Search } from 'lucide-react'
 
 interface PaginationState {
 	page: number
@@ -55,6 +56,8 @@ function AllLeads() {
 	const [searchValue, setSearchValue] = useState('')
 	const [searchQuery, setSearchQuery] = useState('')
 	const [leads, setLeads] = useState<Lead[]>([])
+	const [selectedLead, setSelectedLead] = useState<Lead | null>(null)
+	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [pagination, setPagination] = useState<PaginationState>({
 		page: 1,
 		limit: DEFAULT_PAGE_SIZE,
@@ -64,41 +67,34 @@ function AllLeads() {
 
 	const debounceTimeout = useRef<NodeJS.Timeout | null>(null)
 
-	const { listLeads } = useLeadsUseCases()
-	const { startLoading, stopLoading } = useLoading()
+	const { listLeads, deleteLead } = useLeadsUseCases()
+	const toast = useToast()
 
-	const fetchLeads = useCallback(
-		async (page: number, limit: number, search?: string) => {
-			startLoading('Carregando leads...')
+	useEffect(() => {
+		const fetchLeads = async () => {
 			try {
 				const response = await listLeads.execute({
-					page,
-					limit,
-					search: search || undefined,
+					page: pagination.page,
+					limit: pagination.limit,
+					search: searchQuery || undefined,
 					sortBy: 'createdAt',
 					sortOrder: 'desc'
 				})
 				if (response.data && !response.hasError) {
 					setLeads(response.data)
-					setPagination({
-						page: response.page ?? page,
-						limit: response.limit ?? limit,
+					setPagination((prev) => ({
+						...prev,
 						totalItems: response.totalItems ?? 0,
 						totalPages: response.totalPages ?? 0
-					})
+					}))
 				}
 			} catch (error) {
 				console.error('Erro ao carregar leads:', error)
-			} finally {
-				stopLoading()
 			}
-		},
-		[listLeads, startLoading, stopLoading]
-	)
+		}
 
-	useEffect(() => {
-		fetchLeads(pagination.page, pagination.limit, searchQuery)
-	}, [pagination.page, pagination.limit, searchQuery])
+		fetchLeads()
+	}, [pagination.page, pagination.limit, searchQuery, listLeads])
 
 	const handleSearchChange = (value: string) => {
 		setSearchValue(value)
@@ -109,17 +105,49 @@ function AllLeads() {
 
 		debounceTimeout.current = setTimeout(() => {
 			setSearchQuery(value)
-			setPagination(prev => ({ ...prev, page: 1 }))
+			setPagination((prev) => ({ ...prev, page: 1 }))
 		}, 500)
 	}
 
 	const handlePageChange = (page: number) => {
-		setPagination(prev => ({ ...prev, page }))
+		setPagination((prev) => ({ ...prev, page }))
 	}
 
 	const handlePageSizeChange = (limit: number) => {
-		setPagination(prev => ({ ...prev, limit, page: 1 }))
+		setPagination((prev) => ({ ...prev, limit, page: 1 }))
 	}
+
+	const handleRowClick = (lead: Lead) => {
+		setSelectedLead(lead)
+		setIsModalOpen(true)
+	}
+
+	const handleDeleteLead = useCallback(
+		async (lead: Lead) => {
+			try {
+				const response = await deleteLead.execute(lead.id)
+				if (!response.hasError) {
+					setLeads((prevLeads) => prevLeads.filter((l) => l.id !== lead.id))
+					toast.success('Lead deletado com sucesso.')
+					setPagination((prev) => ({
+						...prev,
+						totalItems: Math.max(0, prev.totalItems - 1)
+					}))
+				} else {
+					toast.error('Erro ao deletar lead.')
+				}
+			} catch (error) {
+				console.error('Erro ao deletar lead:', error)
+				toast.error('Erro ao deletar lead.')
+			}
+		},
+		[deleteLead, toast]
+	)
+
+	const columns = useMemo(
+		() => createLeadsColumns({ onDelete: handleDeleteLead }),
+		[handleDeleteLead]
+	)
 
 	const filters = [
 		...(temperatureFilter && temperatureFilter !== 'all'
@@ -160,12 +188,12 @@ function AllLeads() {
 						className='shadow-none border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0'
 						placeholder='Buscar lead...'
 						value={searchValue}
-						onChange={e => handleSearchChange(e.target.value)}
+						onChange={(e) => handleSearchChange(e.target.value)}
 					/>
 				</div>
 			</div>
 			<DataTable
-				columns={leadsColumns}
+				columns={columns}
 				data={leads}
 				filterableColumns={filters}
 				emptyMessage='Nenhum lead encontrado.'
@@ -177,6 +205,12 @@ function AllLeads() {
 					onPageChange: handlePageChange,
 					onPageSizeChange: handlePageSizeChange
 				}}
+				onRowClick={handleRowClick}
+			/>
+			<LeadDetailsModal
+				lead={selectedLead}
+				open={isModalOpen}
+				onOpenChange={setIsModalOpen}
 			/>
 		</div>
 	)

@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Search } from 'lucide-react'
+import { Loader2, Search } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import {
 	defaultSectorRegionSizeValues,
@@ -56,11 +56,13 @@ const SIZE_OPTIONS = [
 interface SectorRegionSizeTabProps {
 	readonly onSearch: (data: SectorRegionSizeFormData) => void
 	readonly onCancel: () => void
+	readonly isLoading?: boolean
 }
 
 export function SectorRegionSizeTab({
 	onSearch,
-	onCancel
+	onCancel,
+	isLoading = false
 }: Readonly<SectorRegionSizeTabProps>) {
 	const form = useForm<SectorRegionSizeFormData>({
 		resolver: zodResolver(sectorRegionSizeSchema),
@@ -161,12 +163,16 @@ export function SectorRegionSizeTab({
 					/>
 
 					<div className='flex justify-end gap-3 pt-4'>
-						<Button type='button' variant='outline' onClick={onCancel}>
+						<Button type='button' variant='outline' onClick={onCancel} disabled={isLoading} className='cursor-pointer'>
 							Cancelar
 						</Button>
-						<Button type='submit'>
-							<Search className='size-4' />
-							Buscar
+						<Button type='submit' disabled={isLoading} className='cursor-pointer'>
+							{isLoading ? (
+								<Loader2 className='size-4 animate-spin' />
+							) : (
+								<Search className='size-4' />
+							)}
+							{isLoading ? 'Buscando...' : 'Buscar'}
 						</Button>
 					</div>
 				</form>
